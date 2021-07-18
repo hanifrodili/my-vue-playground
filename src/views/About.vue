@@ -1,5 +1,18 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="about" style="height:100vh">
+    <iframe src="https://hanifrodili.com" frameborder="0" class="myiframe"></iframe>
   </div>
 </template>
+<script>
+export default {
+  data: () => ({
+  }),
+}
+</script>
+<style scoped>
+.myiframe{
+  height: calc(100%);
+  width: 100%;
+  /* margin-top: 56px; */
+}
+</style>
