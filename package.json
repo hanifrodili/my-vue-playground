@@ -16,7 +16,7 @@
     "grapesjs": "^0.17.19",
     "grapesjs-preset-webpage": "^0.1.11",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
+    "vue-router": "^3.5.2",
     "vuetify": "^2.4.0"
   },
   "devDependencies": {
