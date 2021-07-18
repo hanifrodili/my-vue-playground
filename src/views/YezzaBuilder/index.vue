@@ -77,12 +77,20 @@ export default {
       window.localStorage.setItem('userComponents',JSON.stringify(this.userComponents))
     },
     moveBlockUp(id,index){
+      if (index===0){ 
+        alert('Already on top')
+        return
+      } 
       const element = this.userComponents[index];
       this.userComponents.splice(index, 1);
       this.userComponents.splice(index-1, 0, element);
       window.localStorage.setItem('userComponents',JSON.stringify(this.userComponents))
     },
-    moveBlockDown(id, index){
+    moveBlockDown(id,index){
+      if (index===this.userComponents.length-1){ 
+        alert('Already at bottom')
+        return
+      } 
       const element = this.userComponents[index];
       this.userComponents.splice(index, 1);
       this.userComponents.splice(index+1, 0, element);
