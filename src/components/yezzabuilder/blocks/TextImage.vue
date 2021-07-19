@@ -21,10 +21,10 @@
           h1.title-font {{configs.title.value}}
           p.desc-font.mx-auto {{configs.desc.value}}
           v-btn.btn-cta(v-show="configs.btnText.value" @click="" ) {{configs.btnText.value}}
-      v-speed-dial.btn-open(v-model="fab" v-if="editable" direction="top" transition="slide-y-reverse-transition" right=true bottom=true)
+      v-speed-dial.btn-open(v-model="fab" v-if="editable" direction="left" transition="slide-x-reverse-transition" right=true bottom=true)
         template( v-slot:activator )
           v-btn(v-model="fab" dark fab color="primary")
-            v-icon(v-if="!fab") mdi-dots-vertical
+            v-icon(v-if="!fab") mdi-dots-horizontal
             v-icon(v-else) mdi-close
         v-btn.btn-edit(:class="{'btn-edit--active':dialog}"  @click="dialog = true" fab small dark color="success")
           v-icon.edit-icon mdi-pencil
