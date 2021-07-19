@@ -21,7 +21,7 @@
       v-dialog(v-model="dialog" scrollable persistent max-width="500px" v-if="editable")
         v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px);")
           v-card-title.justify-space-between
-            | Text & Image
+            | Intro {{reuseBlockID}}
             v-btn(color="primary" fab x-small dark text @click="dialog = false")
               v-icon mdi-close
           v-card-text.pa-0
@@ -66,6 +66,9 @@ export default {
       default: () => {}
     },
     blockID: {
+      type: String
+    },
+    reuseBlockID: {
       type: String
     },
     blockIndex: {
@@ -135,7 +138,7 @@ export default {
       this.$emit('removeBlock', id)
     },
     updateConfig(){
-      this.$emit('updateConfigs', this.configs, this.blockID)
+      this.$emit('updateConfigs', this.configs, this.blockID, this.reuseBlockID)
     },
     moveBlockUp(index){
       this.$emit('moveUp', this.blockID, index)

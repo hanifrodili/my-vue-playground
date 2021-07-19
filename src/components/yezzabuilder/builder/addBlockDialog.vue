@@ -9,15 +9,22 @@
         v-btn(color="primary" fab x-small dark text @click="dialog = false")
           v-icon mdi-close
       v-card-text.pa-4
-        v-row
-          v-col(cols="12" md="6")
-            v-btn(style="width:100%" @click="addBlock(position+1, 0), dialog=false") Intro
-          v-col(cols="12" md="6")
-            v-btn(style="width:100%" @click="addBlock(position+1, 1), dialog=false") Text
-        v-row
-          v-col(cols="12" md="6")
-            v-btn(style="width:100%" @click="addBlock(position+1, 2), dialog=false") Text & Image
-          v-col(cols="12" md="6")
+        v-container
+          h4.mb-3 New Block
+          v-row
+            v-col(cols="12" md="6")
+              v-btn(style="width:100%" @click="addBlock(position+1, 0), dialog=false") Intro
+            v-col(cols="12" md="6")
+              v-btn(style="width:100%" @click="addBlock(position+1, 1), dialog=false") Text
+            v-col(cols="12" md="6")
+              v-btn(style="width:100%" @click="addBlock(position+1, 2), dialog=false") Text & Image
+            v-col(cols="12" md="6")
+          div(v-if="usedBlock.length > 0")
+            hr.mt-6.mb-3(style="width:100%")
+            h4.mb-3 Reuse Block
+            v-row
+              v-col(cols="12" md="6" v-for="(block, index) in usedBlock" :key="index")
+                v-btn(style="width:100%" @click="reuseBlock(position+1, usedBlock[index]), dialog=false") {{block.name}} {{block.reuseBlockID}}
 </template>
 
 <script>
@@ -25,6 +32,9 @@ export default {
   props: {
     position: {
       type: Number
+    },
+    usedBlock: {
+      type: Array
     }
   },
   data: ()=>({
@@ -33,6 +43,9 @@ export default {
   methods: {
     addBlock(pos,block){
       this.$emit('addBlock',pos,block)
+    },
+    reuseBlock(pos,block){
+      this.$emit('reuseBlock',pos,JSON.stringify(block))
     }
   }
 }

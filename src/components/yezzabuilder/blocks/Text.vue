@@ -22,7 +22,7 @@
         v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px); border:1px solid rgba(0,0,0,.1)")
           v-card-title.justify-space-between
             div
-              | Text
+              | Text  {{reuseBlockID}}
               //- v-icon.pb-1.ml-3 mdi-dock-left
               //- v-icon.pb-1 mdi-dock-right
             v-btn(color="primary" fab x-small dark text @click="dialog = false")
@@ -60,6 +60,9 @@ export default {
       default: () => {}
     },
     blockID: {
+      type: String
+    },
+    reuseBlockID: {
       type: String
     },
     blockIndex: {
@@ -114,7 +117,7 @@ export default {
       this.$emit('removeBlock', id)
     },
     updateConfig(){
-      this.$emit('updateConfigs', this.configs, this.blockID)
+      this.$emit('updateConfigs', this.configs, this.blockID, this.reuseBlockID)
     },
     moveBlockUp(index){
       this.$emit('moveUp', this.blockID, index)
