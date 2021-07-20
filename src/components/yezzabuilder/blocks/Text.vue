@@ -5,19 +5,7 @@
         v-col.text-center(cols="12")
           h1.title-font {{configs.title.value}}
           p.desc-font {{configs.desc.value}}
-      v-speed-dial.btn-open(v-model="fab" v-if="editable" direction="left" transition="slide-x-reverse-transition" right=true bottom=true)
-        template( v-slot:activator )
-          v-btn(v-model="fab" dark fab color="primary")
-            v-icon(v-if="!fab") mdi-dots-horizontal
-            v-icon(v-else) mdi-close
-        v-btn.btn-edit(:class="{'btn-edit--active':dialog}"  @click="dialog = true" fab small dark color="success")
-          v-icon.edit-icon mdi-pencil
-        v-btn.btn-edit(:class="{'btn-edit--active':dialog}" fab small dark color="red")
-          v-icon.edit-icon(@click="deleteBlock(blockID)") mdi-trash-can
-        v-btn.btn-edit(:class="{'btn-edit--active':dialog}" fab small dark color="secondary")
-          v-icon.edit-icon(@click="moveBlockDown(blockIndex)") mdi-arrow-down-thick
-        v-btn.btn-edit(:class="{'btn-edit--active':dialog}" fab small dark color="secondary")
-          v-icon.edit-icon(@click="moveBlockUp(blockIndex)") mdi-arrow-up-thick
+      speed-menu(:dialog="dialog" :editable="editable" :blockIndex="blockIndex" :blockID="blockID" @openDialog="handleDialog" @editBlock="handleEditBlock")
       v-dialog(v-model="dialog" scrollable persistent max-width="500px" v-if="editable" )
         v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px); border:1px solid rgba(0,0,0,.1)")
           v-card-title.justify-space-between
@@ -52,8 +40,10 @@
                   v-textarea.mb-2(v-model="configs.desc.value" @input="updateConfig" outlined dense placeholder="Text 2" hide-details="auto" background-color="rgba(255,255,255,0.5)")
 </template>
 <script>
+import SpeedMenu from '@/components/yezzabuilder/builder/SpeedMenu.vue'
 export default {
   name: 'TextBlock',
+  components: { SpeedMenu },
   props: {
     configs: {
       type: Object,
@@ -124,6 +114,20 @@ export default {
     },
     moveBlockDown(index){
       this.$emit('moveDown', this.blockID, index)
+    },
+    handleDialog(e){
+      this.dialog = e
+    },
+    handleEditBlock(id,act){
+      if (act === 'delete') {
+        this.deleteBlock(id)
+      }
+      if (act === 'up') {
+        this.moveBlockUp(id)
+      }
+      if (act === 'down') {
+        this.moveBlockDown(id)
+      }
     }
   }
 }
