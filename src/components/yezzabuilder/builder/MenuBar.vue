@@ -4,13 +4,16 @@
     v-tooltip(bottom)
       template( v-slot:activator="{ on, attrs }" )
         v-btn(icon @click="downloadJSON" v-bind="attrs" v-on="on")
-            v-icon mdi-download
+          v-icon mdi-download
       span Download Layout File
     v-tooltip(bottom)
       template( v-slot:activator="{ on, attrs }" )
         v-btn(icon @click="dialog=true" v-bind="attrs" v-on="on")
-            v-icon mdi-upload
+          v-icon mdi-upload
       span Upload Layout File
+    router-link(:to="{ name: 'YezzaBuilderPrev', params: { id: 123 }}")
+      v-btn(icon @click="router.push({ path: `/prev/123` })")
+        v-icon mdi-eye
     router-link(to="/yezzabuilder/preview" target="_blank" )
       v-tooltip(bottom)
         template( v-slot:activator="{ on, attrs }" )

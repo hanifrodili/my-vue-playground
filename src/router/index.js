@@ -7,6 +7,7 @@ import About from '../views/About.vue'
 import MyCustom from '../views/MyCustom.vue'
 import YezzaBuilder from '../views/YezzaBuilder/index.vue'
 import YezzaBuilderPreview from '../views/YezzaBuilder/preview.vue'
+import YezzaBuilderPrev from '../views/YezzaBuilder/prev/_id.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/yezzabuilder/preview',
     name: 'YezzaBuilderPreview',
     component: YezzaBuilderPreview
+  },
+  {
+    path: '/yezzabuilder/prev/:id',
+    name: 'YezzaBuilderPrev',
+    component: YezzaBuilderPrev
   }
 ]
 
