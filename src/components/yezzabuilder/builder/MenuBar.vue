@@ -1,5 +1,11 @@
 <template lang="pug">
   v-app-bar(dense dark app style="z-index:150;" :style="$vuetify.breakpoint.width < 960 ? 'margin-top:54px !important' : 'margin-top:64px !important'")
+    router-link(to="../" target="_Self" )
+      v-tooltip(bottom)
+        template( v-slot:activator="{ on, attrs }" )
+          v-btn(icon v-bind="attrs" v-on="on")
+            v-icon mdi-home
+        span Back to Pages
     v-spacer
     v-tooltip(bottom)
       template( v-slot:activator="{ on, attrs }" )
@@ -11,15 +17,18 @@
         v-btn(icon @click="dialog=true" v-bind="attrs" v-on="on")
           v-icon mdi-upload
       span Upload Layout File
-    router-link(:to="{ name: 'YezzaBuilderPrev', params: { id: 123 }}")
-      v-btn(icon @click="router.push({ path: `/prev/123` })")
-        v-icon mdi-eye
-    router-link(to="/yezzabuilder/preview" target="_blank" )
+    router-link(:to="{ name: 'YezzaBuilderPreview', params: { id: `${pageID}` }}" target="_blank" )
       v-tooltip(bottom)
         template( v-slot:activator="{ on, attrs }" )
-          v-btn(icon  v-bind="attrs" v-on="on")
+          v-btn(icon v-bind="attrs" v-on="on")
             v-icon mdi-eye-outline
         span Preview Layout
+    //- router-link(to="/yezzabuilder/preview" target="_blank" )
+    //-   v-tooltip(bottom)
+    //-     template( v-slot:activator="{ on, attrs }" )
+    //-       v-btn(icon  v-bind="attrs" v-on="on")
+    //-         v-icon mdi-eye-outline
+    //-     span Preview Layout
     v-dialog( v-model="dialog" max-width="500px" )
       v-card(  )
         v-card-title
@@ -37,20 +46,35 @@
 <script>
 export default {
   name: 'MenuBar',
+  props:{
+    pageID:{
+      type: String
+    }
+  },
   data:()=>({
     dialog: false,
+    userComponents: [],
     importedFile: null
   }),
   mounted(){
+    const userPages = JSON.parse(window.localStorage.getItem('userPages'))
+    if (userPages.length > 0){
+      userPages.forEach(item => {
+        if (item.id === this.pageID) {
+          this.userComponents = item.components
+        }
+      });
+    }
   },
   methods:{
     downloadJSON(){
-      const data =  window.localStorage.getItem('userComponents')
-      const id =  window.localStorage.getItem('browserID')
+      const data =  JSON.stringify(this.userComponents)
       const blob = new Blob([data], {type: 'application/json'})
+      const d = new Date()
+      const date = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
       const e = document.createEvent('MouseEvents'),
       a = document.createElement('a');
-      a.download = id+"-page-cofig.json";
+      a.download = this.pageID+"-"+date+".json";
       a.href = window.URL.createObjectURL(blob);
       a.dataset.downloadurl = ['application/json', a.download, a.href].join(':');
       e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);

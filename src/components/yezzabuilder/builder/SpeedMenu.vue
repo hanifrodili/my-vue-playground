@@ -1,60 +1,60 @@
 <template lang="pug">
-    v-speed-dial.btn-open(v-model="fab" v-if="editable" direction="left" transition="slide-x-reverse-transition" right=true bottom=true)
-        template( v-slot:activator )
-          v-btn.btn-speeddial(v-model="fab" dark small fab color="primary")
-            v-icon(v-if="!fab") mdi-dots-horizontal
-            v-icon(v-else) mdi-close
-        v-tooltip(bottom)
-            template( v-slot:activator="{ on, attrs }" )
-                v-btn.btn-edit(@click="editDialog(true)" fab x-small dark color="success" v-bind="attrs" v-on="on")
-                    v-icon.edit-icon mdi-pencil
-            span Edit Block
-        v-tooltip(bottom)
-            template( v-slot:activator="{ on, attrs }" )
-                v-btn.btn-edit(fab x-small dark color="red" v-bind="attrs" v-on="on")
-                    v-icon.edit-icon(@click="editBlock(blockID,'delete')") mdi-trash-can
-            span Delete Block
-        v-tooltip(bottom)
-            template( v-slot:activator="{ on, attrs }" )
-                v-btn.btn-edit(fab x-small dark color="warning" v-bind="attrs" v-on="on")
-                    v-icon.edit-icon(@click="editBlock(blockIndex,'down')") mdi-arrow-down-thick
-            span Move Block Up
-        v-tooltip(bottom)
-            template( v-slot:activator="{ on, attrs }" )
-                v-btn.btn-edit(fab x-small dark color="warning" v-bind="attrs" v-on="on")
-                    v-icon.edit-icon(@click="editBlock(blockIndex,'up')") mdi-arrow-up-thick
-            span Move Block Down
+  v-speed-dial.btn-open(v-model="fab" v-if="editable" direction="left" transition="slide-x-reverse-transition" right=true bottom=true)
+    template( v-slot:activator )
+      v-btn.btn-speeddial(v-model="fab" dark small fab color="primary")
+        v-icon(v-if="!fab") mdi-dots-horizontal
+        v-icon(v-else) mdi-close
+    v-tooltip(bottom)
+      template( v-slot:activator="{ on, attrs }" )
+        v-btn.btn-edit(@click="editDialog(true)" fab x-small dark color="success" v-bind="attrs" v-on="on")
+          v-icon.edit-icon mdi-pencil
+      span Edit Block
+    v-tooltip(bottom)
+      template( v-slot:activator="{ on, attrs }" )
+        v-btn.btn-edit(fab x-small dark color="red" v-bind="attrs" v-on="on")
+          v-icon.edit-icon(@click="editBlock(blockID,'delete')") mdi-trash-can
+      span Delete Block
+    v-tooltip(bottom)
+      template( v-slot:activator="{ on, attrs }" )
+        v-btn.btn-edit(fab x-small dark color="warning" v-bind="attrs" v-on="on")
+          v-icon.edit-icon(@click="editBlock(blockIndex,'down')") mdi-arrow-down-thick
+      span Move Block Down
+    v-tooltip(bottom)
+      template( v-slot:activator="{ on, attrs }" )
+        v-btn.btn-edit(fab x-small dark color="warning" v-bind="attrs" v-on="on")
+          v-icon.edit-icon(@click="editBlock(blockIndex,'up')") mdi-arrow-up-thick
+      span Move Block Up
 </template>
 <script>
 export default {
-    name:"SpeedMenu",
-    props:{
-        editable:{
-            type: Boolean,
-            default: false
-        },
-        dialog:{
-            type: Boolean,
-            default: false
-        },
-        blockIndex:{
-            type: Number
-        },
-        blockID:{
-            type: String
-        }
+  name:"SpeedMenu",
+  props:{
+    editable:{
+      type: Boolean,
+      default: false
     },
-    data:()=>({
-        fab: false,
-    }),
-    methods:{
-        editDialog(bool){
-            this.$emit('openDialog',bool)
-        },
-        editBlock(ind,act){
-            this.$emit('editBlock',ind,act)
-        }
+    dialog:{
+      type: Boolean,
+      default: false
+    },
+    blockIndex:{
+      type: Number
+    },
+    blockID:{
+      type: String
     }
+  },
+  data:()=>({
+    fab: false,
+  }),
+  methods:{
+    editDialog(bool){
+      this.$emit('openDialog',bool)
+    },
+    editBlock(ind,act){
+      this.$emit('editBlock',ind,act)
+    }
+  }
 }
 </script>
 <style scoped>

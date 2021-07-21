@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app.main-font
-    nav-bar(style="z-index:200" v-if="!['YezzaBuilderPreview'].includes($route.name)")
+    nav-bar(style="z-index:200" v-if="!(['YezzaBuilderPreview'].includes($route.name)||['YezzaBuilderPrev'].includes($route.name))")
     v-main
       router-view
 </template>

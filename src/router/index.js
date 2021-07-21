@@ -2,12 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
-// import Grapesjs from '../views/Grapesjs.vue'
-// import VCraftjs from '../views/VCraftjs.vue'
 import MyCustom from '../views/MyCustom.vue'
-import YezzaBuilder from '../views/YezzaBuilder/index.vue'
-import YezzaBuilderPreview from '../views/YezzaBuilder/preview.vue'
-import YezzaBuilderPrev from '../views/YezzaBuilder/prev/_id.vue'
+import BuilderHome from '../views/YezzaBuilder/index.vue'
+import YezzaBuilderPreview from '../views/YezzaBuilder/preview/_id.vue'
+import Builder from '../views/YezzaBuilder/builder/_id.vue'
 
 Vue.use(VueRouter)
 
@@ -45,18 +43,18 @@ const routes = [
   },
   {
     path: '/yezzabuilder',
-    name: 'YezzaBuilder',
-    component: YezzaBuilder
+    name: 'BuilderHome',
+    component: BuilderHome
   },
   {
-    path: '/yezzabuilder/preview',
+    path: '/yezzabuilder/preview/:id',
     name: 'YezzaBuilderPreview',
     component: YezzaBuilderPreview
   },
   {
-    path: '/yezzabuilder/prev/:id',
-    name: 'YezzaBuilderPrev',
-    component: YezzaBuilderPrev
+    path: '/yezzabuilder/builder/:id',
+    name: 'Builder',
+    component: Builder
   }
 ]
 
