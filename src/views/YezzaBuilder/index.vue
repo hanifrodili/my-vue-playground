@@ -1,23 +1,47 @@
 <template lang="pug">
-  .builder-home
-    v-container(style="margin-top:80px")
-      v-row
-        v-col(cols="6" md="3" v-for="page in userPages" :key="page.id")
-          router-link(:to="{ name: 'Builder', params: { id: page.id }}")
-            v-card( style="height:100%")
-              v-card-text
-                h3 {{page.title}}
-                p.mb-0
-                  i Last Update: {{page.lastUpdate}}
-        v-col(cols="6" md="3")
-          v-card.d-flex(@click="dialog=true, newPageID = `page-${randID(5)}`" style="height:100%")
-            v-card-text.text-center.ma-auto
-              h3 Build New Page +
-    v-dialog(v-model="dialog" scrollable persistent max-width="500px")
+  .builder-home.px-5.py-10
+    v-row
+      v-col.px-1.py-2(cols="6" md="3" sm="4" v-for="page in userPages" :key="page.id")
+        v-card( style="height:108px")
+          v-card-text.pa-2.my-auto
+            div
+              h3 {{page.title}}
+              p.mb-0(style="font-size:12px; line-height:15px")
+                i Last Update:
+                br
+                |{{page.lastUpdate}}
+          v-card-actions.pa-2
+            v-spacer
+            v-btn.mx-1(@click="dialogDelete=true" icon color="red" small)
+              v-icon mdi-trash-can
+            p.mb-0 |
+            router-link(:to="{ name: 'YezzaBuilderPreview', params: { id: page.id }}" target="_blank")
+              v-btn.mx-1(icon color="success" small)
+                v-icon mdi-eye-outline
+            router-link(:to="{ name: 'Builder', params: { id: page.id }}")
+              v-btn.mx-1(icon color="primary" small)
+                v-icon mdi-pencil
+          v-dialog(v-model="dialogDelete" scrollable persistent max-width="300px")
+            v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px);")
+              v-card-text.pa-4
+                v-container()
+                  p Confirm Delete?
+                  h3 This action can't be undo
+              v-card-actions
+                v-spacer
+                v-btn(outlined color="primary" @click="deletePage(page.id)") Yes
+                v-btn(color="primary" @click="dialogDelete=false") No
+      v-col.px-1.py-2(cols="6" md="3" sm="4")
+        v-card.new-card.elevation-0.d-flex(@click="dialogAdd=true, newPageID = `page-${randID(5)}`" style="height:108px")
+          v-card-text.text-center.ma-auto
+            div 
+              v-icon mdi-plus
+              p.mb-0(style="font-size:12px") Build New
+    v-dialog(v-model="dialogAdd" scrollable persistent max-width="500px")
       v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px);")
         v-card-title.justify-space-between
           | Build New Page
-          v-btn(color="primary" fab x-small dark text @click="dialog = false")
+          v-btn(color="primary" fab x-small dark text @click="dialogAdd = false")
             v-icon mdi-close
         v-card-text.pa-4
           v-container()
@@ -33,7 +57,8 @@
 export default {
   name: 'BuilderHome',
   data:()=>({
-    dialog: false,
+    dialogAdd: false,
+    dialogDelete: false,
     newPageID: '',
     newPageTitle: '',
     userPages:[]
@@ -71,7 +96,13 @@ export default {
       window.localStorage.setItem('userPages',JSON.stringify(this.userPages))
       this.newPageID = ''
       this.newPageTitle = ''
-      this.dialog = false
+      this.dialogAdd = false
+      this.$router.push(`/yezzabuilder/builder/${id}`)
+    },
+    deletePage(id){
+      this.userPages = this.userPages.filter((x) => x.id !== id)
+      window.localStorage.setItem('userPages',JSON.stringify(this.userPages))
+      this.dialogDelete = false
     }
   }
 }
@@ -80,6 +111,14 @@ export default {
 a{
   text-decoration: none;
 }
+
+.new-card{
+  border: 2px solid rgba(0,0,0,.6) !important;
+}
+.new-card:hover{
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 ::v-deep .v-text-field--filled > .v-input__control > .v-input__slot{
   background: #F7F7F7 !important;
   border: 1px solid #eaeaea !important;

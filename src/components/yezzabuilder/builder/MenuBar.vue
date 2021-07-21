@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app-bar(dense dark app style="z-index:150;" :style="$vuetify.breakpoint.width < 960 ? 'margin-top:54px !important' : 'margin-top:64px !important'")
-    router-link(to="../" target="_Self" )
+    router-link(to="/yezzabuilder" target="_self" )
       v-tooltip(bottom)
         template( v-slot:activator="{ on, attrs }" )
           v-btn(icon v-bind="attrs" v-on="on")
@@ -49,11 +49,13 @@ export default {
   props:{
     pageID:{
       type: String
+    },
+    userComponents:{
+      type: Object
     }
   },
   data:()=>({
     dialog: false,
-    userComponents: [],
     importedFile: null
   }),
   mounted(){

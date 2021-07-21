@@ -1,6 +1,6 @@
 <template lang="pug">
   .yezza-builder
-    menu-bar(@import="importData" :pageID="pageID")
+    menu-bar(@import="importData" :pageID="pageID" :pageData="userComponents")
     div(:style="$vuetify.breakpoint.width < 960 ? 'margin-top:46px' : 'margin-top:48px'")
       template(v-for="(components, index) in userComponents")
         component(:is="components.component" :configs="components.config" 
