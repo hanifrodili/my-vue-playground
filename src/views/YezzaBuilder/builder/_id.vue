@@ -1,6 +1,6 @@
 <template lang="pug">
   .yezza-builder
-    menu-bar(@import="importData" :pageID="pageID" :pageData="userComponents")
+    menu-bar(@import="importData" :pageID="pageID" :pageData="userComponents" :pageTitle="pageTitle")
     div(:style="$vuetify.breakpoint.width < 960 ? 'margin-top:46px' : 'margin-top:48px'")
       template(v-for="(components, index) in userComponents")
         component(:is="components.component" :configs="components.config" 
@@ -27,7 +27,8 @@ export default {
   data: ()=>({
     userPages:[],
     userComponents: [],
-    pageID: null
+    pageID: '',
+    pageTitle: ''
   }),
   mounted(){
     this.pageID = this.$route.params.id
@@ -36,6 +37,7 @@ export default {
       this.userPages.forEach(item => {
           if (item.id === this.pageID) {
               this.userComponents = item.components
+              this.pageTitle = item.title
           }
       });
     }

@@ -6,6 +6,7 @@
           v-btn(icon v-bind="attrs" v-on="on")
             v-icon mdi-home
         span Back to Pages
+    p.ma-0 {{pageTitle}}
     v-spacer
     v-tooltip(bottom)
       template( v-slot:activator="{ on, attrs }" )
@@ -48,6 +49,9 @@ export default {
   name: 'MenuBar',
   props:{
     pageID:{
+      type: String
+    },
+    pageTitle:{
       type: String
     },
     userComponents:{
