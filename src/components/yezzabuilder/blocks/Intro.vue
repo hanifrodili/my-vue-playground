@@ -19,16 +19,29 @@
                 v-expansion-panel-content.py-3
                   label Parallax Background
                   v-select.mb-2(v-model="configs.bgParallax.value" @input="updateConfig" outlined dense :items="yesNoOptions" item-value="option" item-text="label" hide-details="auto")
-                  label Background Color
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-model="configs.bgColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
-                  label Text  Color
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-model="configs.textColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+
+                  p.mb-1 Background Color
+                  v-btn.mb-4.btn-pickcolor( @click="bgColorPick=!bgColorPick" :color="configs.bgColor.value" width="100%")
+                    span(v-if="!bgColorPick" ) {{configs.bgColor.value}}
+                    span(v-else) Close
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="bgColorPick" v-model="configs.bgColor.value" @input="updateConfig, bgColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+
+                  p.mb-1 Text  Color
+                  v-btn.mb-4.btn-pickcolor( @click="txtColorPick=!txtColorPick" :color="configs.textColor.value" width="100%")
+                    span(v-if="!txtColorPick" ) {{configs.textColor.value}}
+                    span(v-else) Close
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="txtColorPick" v-model="configs.textColor.value" @input="updateConfig, txtColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+
                   label Padding
                   v-row
                     v-col(cols="12" sm="6")
-                      v-text-field.mb-2(prefix="Top: " v-model="configs.blockPaddingTop.value" @input="updateConfig" outlined dense placeholder="Padding Top" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
+                      label Top: {{configs.blockPaddingTop.value}}px
+                      v-slider(v-model="configs.blockPaddingTop.value" @input="updateConfig" min="0" max="180")
+                      //- v-text-field.mb-2(prefix="Top: " v-model="configs.blockPaddingTop.value" @input="updateConfig" outlined dense placeholder="Padding Top" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
                     v-col(cols="12" sm="6")
-                      v-text-field.mb-2(prefix="Bottom: " v-model="configs.blockPaddingBottom.value" @input="updateConfig" outlined dense placeholder="Padding Bottom" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
+                      label Bottom: {{configs.blockPaddingBottom.value}}px
+                      v-slider(v-model="configs.blockPaddingBottom.value" @input="updateConfig" min="0" max="180")
+                      //- v-text-field.mb-2(prefix="Bottom: " v-model="configs.blockPaddingBottom.value" @input="updateConfig" outlined dense placeholder="Padding Bottom" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
               v-expansion-panel(style="background-color:transparent")
                 v-expansion-panel-header Content
                 v-expansion-panel-content.py-3
@@ -39,10 +52,17 @@
                 v-expansion-panel-content.py-3
                   label Button Text
                   v-text-field.mb-2(v-model="configs.btnText.value" @input="updateConfig" outlined dense placeholder="Button Text" hide-details="auto" background-color="rgba(255,255,255,0.5)" )
-                  label Button Color
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-model="configs.btnBgColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
-                  label Button Text Color
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-model="configs.btnTextColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  p.mb-1 Button Color
+                  v-btn.mb-4.btn-pickcolor( @click="btnColorPick=!btnColorPick" :color="configs.btnBgColor.value" width="100%")
+                    span(v-if="!btnColorPick" ) {{configs.btnBgColor.value}}
+                    span(v-else) Close
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="btnColorPick" v-model="configs.btnBgColor.value" @input="updateConfig, btnColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  
+                  p.mb-1 Button Text Color
+                  v-btn.mb-4.btn-pickcolor( @click="btnTxtColorPick=!btnTxtColorPick" :color="configs.btnTextColor.value" width="100%")
+                    span(v-if="!btnTxtColorPick" ) {{configs.btnTextColor.value}}
+                    span(v-else) Close
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="btnTxtColorPick" v-model="configs.btnTextColor.value" @input="updateConfig, btnTxtColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
             
 </template>
 <script>
@@ -72,6 +92,11 @@ export default {
   data: () => ({
     dialog: false,
     fab: false,
+    bgColorPick: false,
+    txtColorPick: false,
+    btnColorPick: false,
+    btnTxtColorPick: false,
+    slideNum: 0,
     yesNoOptions: [
       {
         option: true,

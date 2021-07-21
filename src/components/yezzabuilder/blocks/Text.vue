@@ -20,17 +20,28 @@
               v-expansion-panel(style="background-color:transparent")
                 v-expansion-panel-header Section
                 v-expansion-panel-content.py-3
-                  label Background Color
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-model="configs.bgColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
-                  label Text  Color
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-model="configs.textColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  p.mb-1 Background Color
+                  v-btn.mb-4.btn-pickcolor( @click="bgColorPick=!bgColorPick" :color="configs.bgColor.value" width="100%")
+                    span(v-if="!bgColorPick" ) {{configs.bgColor.value}}
+                    span(v-else) Close
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="bgColorPick" v-model="configs.bgColor.value" @input="updateConfig, bgColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+
+                  p.mb-1 Text  Color
+                  v-btn.mb-4.btn-pickcolor( @click="txtColorPick=!txtColorPick" :color="configs.textColor.value" width="100%")
+                    span(v-if="!txtColorPick" ) {{configs.textColor.value}}
+                    span(v-else) Close
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="txtColorPick" v-model="configs.textColor.value" @input="updateConfig, txtColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  
+                  label Padding
                   v-row
                     v-col(cols="12" sm="6")
-                      label Padding Top (px)
-                      v-text-field.mb-2(v-model="configs.blockPaddingTop.value" @input="updateConfig" outlined dense placeholder="Padding Top" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
+                      label Top: {{configs.blockPaddingTop.value}}px
+                      v-slider(v-model="configs.blockPaddingTop.value" @input="updateConfig" min="0" max="180")
+                      //- v-text-field.mb-2(v-model="configs.blockPaddingTop.value" @input="updateConfig" outlined dense placeholder="Padding Top" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
                     v-col(cols="12" sm="6")
-                      label Padding Bottom (px)
-                      v-text-field.mb-2(v-model="configs.blockPaddingBottom.value" @input="updateConfig" outlined dense placeholder="Padding Bottom" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
+                      label Bottom: {{configs.blockPaddingBottom.value}}px
+                      v-slider(v-model="configs.blockPaddingBottom.value" @input="updateConfig" min="0" max="180")
+                      //- v-text-field.mb-2(v-model="configs.blockPaddingBottom.value" @input="updateConfig" outlined dense placeholder="Padding Bottom" hide-details="auto" background-color="rgba(255,255,255,0.5)" type="number" min="0")
               v-expansion-panel(style="background-color:transparent")
                 v-expansion-panel-header Content
                 v-expansion-panel-content.py-3
@@ -65,7 +76,9 @@ export default {
   },
   data: () => ({
     dialog: false,
-    fab: false
+    fab: false,
+    bgColorPick: false,
+    txtColorPick: false
   }),
   computed: {
     cssProps () {
@@ -151,6 +164,11 @@ export default {
     color: var(--v-primary) !important;
     background-color: white !important;
     border: 2px solid var(--v-primary) !important;
+  }
+  .btn-pickcolor > .v-btn__content > span{
+    background-color: rgba(255,255,255,.5);
+    border-radius: 15px;
+    padding: 3px;
   }
   /* .edit-icon{
     transform: rotate(45deg);
