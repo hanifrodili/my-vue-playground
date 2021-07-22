@@ -1,6 +1,7 @@
 <template lang="pug">
-  .builder-home.px-5.py-10
-    v-row
+  .builder-home.px-5.py-10.mx-auto(style="max-width:1240px")
+    p.pa-0.mb-1 My Pages
+    v-row.ma-0
       v-col.px-1.py-2(cols="6" md="3" sm="4" v-for="page in userPages" :key="page.id")
         v-card( style="height:108px")
           v-card-text.pa-2.my-auto
@@ -69,6 +70,11 @@ export default {
       window.localStorage.setItem('userPages',JSON.stringify(this.userPages))
     }else{
       this.userPages = savedPages
+    }
+
+    const browserID = window.localStorage.getItem('browserID')
+    if (browserID == null || browserID == ''){
+       window.localStorage.setItem('browserID','browser-'+this.randID(4))
     }
   },
   methods:{

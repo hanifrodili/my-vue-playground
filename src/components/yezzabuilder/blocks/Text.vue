@@ -24,13 +24,13 @@
                   v-btn.mb-4.btn-pickcolor( @click="bgColorPick=!bgColorPick" :color="configs.bgColor.value" width="100%")
                     span(v-if="!bgColorPick" ) {{configs.bgColor.value}}
                     span(v-else) Close
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="bgColorPick" v-model="configs.bgColor.value" @input="updateConfig, bgColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="bgColorPick" v-model="configs.bgColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
 
                   p.mb-1 Text  Color
                   v-btn.mb-4.btn-pickcolor( @click="txtColorPick=!txtColorPick" :color="configs.textColor.value" width="100%")
                     span(v-if="!txtColorPick" ) {{configs.textColor.value}}
                     span(v-else) Close
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="txtColorPick" v-model="configs.textColor.value" @input="updateConfig, txtColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="txtColorPick" v-model="configs.textColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
                   
                   label Padding
                   v-row
@@ -46,9 +46,12 @@
                 v-expansion-panel-header Content
                 v-expansion-panel-content.py-3
                   label Title Text
-                  v-text-field.mb-2(v-model="configs.title.value" @input="updateConfig" outlined dense placeholder="Text 1" hide-details="auto" background-color="rgba(255,255,255,0.5)")
+                  v-text-field.mb-2(v-model="configs.title.value" @input="updateConfig" outlined dense clearable placeholder="Title" hide-details="auto" background-color="rgba(255,255,255,0.5)")
                   label Description Text
-                  v-textarea.mb-2(v-model="configs.desc.value" @input="updateConfig" outlined dense placeholder="Text 2" hide-details="auto" background-color="rgba(255,255,255,0.5)")
+                  v-textarea.mb-2(v-model="configs.desc.value" @input="updateConfig" outlined dense clearable placeholder="Description" hide-details="auto" background-color="rgba(255,255,255,0.5)")
+          v-card-actions
+            v-spacer
+            v-btn(color="primary" @click="dialog=false") Done
 </template>
 <script>
 import SpeedMenu from '@/components/yezzabuilder/builder/SpeedMenu.vue'

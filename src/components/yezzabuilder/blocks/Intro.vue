@@ -17,20 +17,40 @@
               v-expansion-panel(style="background-color:transparent")
                 v-expansion-panel-header Section
                 v-expansion-panel-content.py-3
-                  label Parallax Background
-                  v-select.mb-2(v-model="configs.bgParallax.value" @input="updateConfig" outlined dense :items="yesNoOptions" item-value="option" item-text="label" hide-details="auto")
-
+                  label Image URL
+                    v-icon.ml-1(style="font-size:15px; margin-bottom:3px" @click="howToGetImage = true") mdi-help-circle-outline
+                  v-card.mb-2.how-to-card.elevation-0(v-if="howToGetImage")
+                      v-card-title.py-0
+                        p.mb-0(style="font-size:12px") How to get your image url
+                        v-spacer
+                        v-btn(color="white" fab x-small dark text @click="howToGetImage = false")
+                          v-icon mdi-close
+                      v-card-text
+                        h5.font-weight-light You can use image from your
+                          a(href="https://photos.google.com/" target="_blank")  Google Photo
+                          |  (click your uploaded photo, open image in new tab and copy the url)
+                          wbr
+                          br
+                          |  or you can use
+                          a(href="https://imagekit.io/" target="_blank")  ImageKit
+                          |  to host your image.
+                  v-text-field.mb-4(v-model="configs.bgImage.value" @input="updateConfig" outlined dense clearable placeholder="Leave blank for no image" hide-details="auto" background-color="rgba(255,255,255,0.5)")
+                  label Background Attachment
+                  //- v-select.mb-2(v-model="configs.bgParallax.value" @input="updateConfig" outlined dense :items="yesNoOptions" item-value="option" item-text="label" hide-details="auto")
+                  v-radio-group.mt-0.mb-4(v-model="configs.bgParallax.value" @input="updateConfig" hide-details)
+                    v-radio(label="Scroll" value="scroll")  
+                    v-radio(label="Fixed" value="fixed")  
                   p.mb-1 Background Color
                   v-btn.mb-4.btn-pickcolor( @click="bgColorPick=!bgColorPick" :color="configs.bgColor.value" width="100%")
                     span(v-if="!bgColorPick" ) {{configs.bgColor.value}}
                     span(v-else) Close
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="bgColorPick" v-model="configs.bgColor.value" @input="updateConfig, bgColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="bgColorPick" v-model="configs.bgColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
 
                   p.mb-1 Text  Color
                   v-btn.mb-4.btn-pickcolor( @click="txtColorPick=!txtColorPick" :color="configs.textColor.value" width="100%")
                     span(v-if="!txtColorPick" ) {{configs.textColor.value}}
                     span(v-else) Close
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="txtColorPick" v-model="configs.textColor.value" @input="updateConfig, txtColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="txtColorPick" v-model="configs.textColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
 
                   label Padding
                   v-row
@@ -46,7 +66,7 @@
                 v-expansion-panel-header Content
                 v-expansion-panel-content.py-3
                   label Title Text
-                  v-text-field.mb-2(v-model="configs.title.value" @input="updateConfig" outlined dense placeholder="Text 1" hide-details="auto" background-color="rgba(255,255,255,0.5)")
+                  v-text-field.mb-2(v-model="configs.title.value" @input="updateConfig" outlined dense clearable placeholder="Text 1" hide-details="auto" background-color="rgba(255,255,255,0.5)")
               v-expansion-panel(style="background-color:transparent")
                 v-expansion-panel-header Button
                 v-expansion-panel-content.py-3
@@ -56,13 +76,16 @@
                   v-btn.mb-4.btn-pickcolor( @click="btnColorPick=!btnColorPick" :color="configs.btnBgColor.value" width="100%")
                     span(v-if="!btnColorPick" ) {{configs.btnBgColor.value}}
                     span(v-else) Close
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="btnColorPick" v-model="configs.btnBgColor.value" @input="updateConfig, btnColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="btnColorPick" v-model="configs.btnBgColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
                   
                   p.mb-1 Button Text Color
                   v-btn.mb-4.btn-pickcolor( @click="btnTxtColorPick=!btnTxtColorPick" :color="configs.btnTextColor.value" width="100%")
                     span(v-if="!btnTxtColorPick" ) {{configs.btnTextColor.value}}
                     span(v-else) Close
-                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="btnTxtColorPick" v-model="configs.btnTextColor.value" @input="updateConfig, btnTxtColorPick=false" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+                  v-color-picker.mx-auto.mb-2.clr-picker(v-show="btnTxtColorPick" v-model="configs.btnTextColor.value" @input="updateConfig" mode="hexa" hide-canvas hide-mode-switch hide-sliders show-swatches hide-inputs swatches-max-height="200")
+          v-card-actions
+            v-spacer
+            v-btn(color="primary" @click="dialog=false") Done
             
 </template>
 <script>
@@ -92,34 +115,26 @@ export default {
   data: () => ({
     dialog: false,
     fab: false,
+    howToGetImage: false,
     bgColorPick: false,
     txtColorPick: false,
     btnColorPick: false,
     btnTxtColorPick: false,
-    slideNum: 0,
-    yesNoOptions: [
-      {
-        option: true,
-        label: 'Yes'
-      },
-      {
-        option: false,
-        label: 'No'
-      }
-    ]
+    slideNum: 0
   }),
   computed: {
     cssProps () {
       const customCSS = {}
       customCSS['--bg-color'] = this.configs.bgColor.value
       customCSS['--bg-image'] = 'url(' + this.configs.bgImage.value + ')'
+      // customCSS['--bg-image'] = 'url()'
       customCSS['--font-color'] = this.configs.textColor.value
       customCSS['--block-padding-top'] = this.configs.blockPaddingTop.value + 'px'
       customCSS['--block-padding-bottom'] = this.configs.blockPaddingBottom.value + 'px'
       customCSS['--btn-bg-color'] = this.configs.btnBgColor.value
       customCSS['--btn-text-color'] = this.configs.btnTextColor.value
       customCSS['--btn-border-radius'] = this.configs.btnBorderRadius.value
-      customCSS['--bg-parallax'] = this.configs.bgParallax.value ? 'fixed' : 'unset'
+      customCSS['--bg-parallax'] = this.configs.bgParallax.value
       return customCSS
     },
     style () {
@@ -201,6 +216,19 @@ export default {
     background-color: white !important;
     border: 2px solid var(--v-primary) !important;
   }
+  .btn-pickcolor > .v-btn__content > span{
+    background-color: rgba(255,255,255,.5);
+    border-radius: 15px;
+    padding: 3px;
+  }
+  .how-to-card{
+    border: .5px solid gray;
+    animation: fade-in .8s ease-in;
+    background-color: rgba(0,0,0,.7);
+  }
+  .how-to-card *{
+    color: white;
+  }
   /* .edit-icon{
     transform: rotate(45deg);
   }
@@ -249,6 +277,15 @@ export default {
       font-size: 36px !important;
     }
   }
+
+  @keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>
 <style lang="scss" scoped>
 ::v-deep .v-expansion-panel::before{

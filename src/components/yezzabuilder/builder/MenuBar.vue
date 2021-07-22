@@ -18,7 +18,7 @@
         v-btn(icon @click="dialog=true" v-bind="attrs" v-on="on")
           v-icon mdi-upload
       span Upload Layout File
-    router-link(:to="{ name: 'YezzaBuilderPreview', params: { id: `${pageID}` }}" target="_blank" )
+    router-link(:to="`/yezzabuilder/preview/${pageID}`" target="_blank" )
       v-tooltip(bottom)
         template( v-slot:activator="{ on, attrs }" )
           v-btn(icon v-bind="attrs" v-on="on")
@@ -53,18 +53,16 @@ export default {
     },
     pageTitle:{
       type: String
-    },
-    userComponents:{
-      type: Object
     }
   },
   data:()=>({
     dialog: false,
-    importedFile: null
+    importedFile: null,
+    userComponents: null
   }),
   mounted(){
     const userPages = JSON.parse(window.localStorage.getItem('userPages'))
-    if (userPages.length > 0){
+    if (userPages){
       userPages.forEach(item => {
         if (item.id === this.pageID) {
           this.userComponents = item.components
