@@ -1,10 +1,28 @@
 <template lang="pug">
   .my-date-picker
-    v-date-picker.mb-4(header-color="basic100" color="info400" style="width:100%")
+    v-date-picker.mb-4(v-model="dates"  header-color="basic100" color="info400" style="width:100%" :events="arrayEvents" event-color="red lighten-1" range)
+    p {{dates[0]}} --> {{dates[1]}}
 </template>
 <script>
 export default {
-  name: 'MyDatePicker'
+  name: 'MyDatePicker',
+  data: () => ({
+    arrayEvents: null,
+    dates: ['2021-07-10', '2021-08-10'],
+  }),
+  computed: {
+    dateRangeText () {
+      return this.dates.join(' ~ ')
+    },
+  },
+  mounted () {
+      this.arrayEvents = [...Array(6)].map(() => {
+        const day = Math.floor(Math.random() * 30)
+        const d = new Date()
+        d.setDate(day)
+        return d.toISOString().substr(0, 10)
+      })
+    },
 }
 </script>
 <style scoped>
@@ -17,7 +35,7 @@ export default {
     display: none;
 }
 ::v-deep .v-picker__title {
-    color: var(--v-primary500);
+    color: black;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     padding: 0;
@@ -27,20 +45,20 @@ export default {
 }
 ::v-deep .v-picker__title__btn{
   /* border-top: 1px solid var(--v-basic300); */
-  border-bottom: 1px solid var(--v-basic300);
+  border-bottom: 1px solid rgba(0,0,0,.5);
   padding: 8px 0;
   margin:0;
 }
 ::v-deep .v-date-picker-header{
-  border-top: 1px solid var(--v-basic300);
-  border-bottom: 1px solid var(--v-basic300);
+  border-top: 1px solid rgba(0,0,0,.5);
+  border-bottom: 1px solid rgba(0,0,0,.5);
   height: 48px;
 }
 
 ::v-deep .v-date-picker-header > button[aria-label="Previous month"],
 ::v-deep .v-date-picker-header > button[aria-label="Previous year"]{
   position: absolute !important;
-  right: 40px;
+  right: 50px;
   width: 20px;
   border-radius: 5px;
 }
@@ -60,6 +78,7 @@ export default {
 ::v-deep .v-date-picker-header .v-date-picker-header__value button::after{
   font-family: "Material Design Icons";
   content: "\F0140";
+  margin-left: 5px;
 }
 
 ::v-deep .v-time-picker-title__time{
@@ -75,7 +94,7 @@ export default {
 }
 ::v-deep .v-date-picker-table th {
     font-size: 15px;
-    color:var(--v-textColorHint) !important;
+    color:gray !important;
 }
 ::v-deep .v-date-picker-table--date .v-btn {
     height: 32px;
@@ -89,11 +108,25 @@ export default {
   color: white;
   background-color: rgba(0,0,0,.8);
 }
-::v-deep .theme--light.v-btn.v-btn--disabled {
-    color:var(--v-textColorHint) !important;
+::v-deep .v-date-picker-table .v-btn.v-btn--disabled {
+    color:gray !important;
 }
+
+::v-deep .v-date-picker-table .v-btn.v-btn--active {
+    background-color: cadetblue;
+}
+
+::v-deep .v-date-picker-table--date .v-date-picker-table__events{
+  bottom: 10px;
+}
+
+::v-deep .v-date-picker-table__events > div{
+  width: 5px;
+  height: 5px;
+}
+
 .v-text-field--outlined >>> fieldset {
-  border-color: var(--v-primary200);
+  border-color: rgba(0,0,0,.5);
 }
 ::v-deep .v-date-picker-table--month td .v-btn {
     margin: 0 auto;

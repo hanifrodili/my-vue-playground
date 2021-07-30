@@ -2,8 +2,8 @@
   .mycustom.pa-5.mx-auto(style="max-width:800px")
     label Text Field
     custom-text-field
-    hr.my-4
-    label Date Picker
+    div.my-8
+    label Date Picker (with range)
     custom-date-picker
 </template>
 
