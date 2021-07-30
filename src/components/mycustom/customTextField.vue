@@ -1,12 +1,15 @@
 <template lang="pug">
   .my-text-field
-    v-text-field.mt-3(label="Name" filled rounded hide-details="auto" :rules="rules.not_empty")
-    v-text-field.mt-3(label="Phone" filled rounded hide-details="auto")
+    v-text-field.mt-3(v-model="name1"  label="First Name" filled rounded hide-details="auto" :rules="rules.not_empty")
+    v-text-field.mt-3(v-model="name2"  label="Last Name" filled rounded hide-details="auto")
+    p.mt-3.text-center {{name1}} {{name2}}
 </template>
 <script>
 export default {
   name: "MyTextField",
   data: () => ({
+    name1: 'John',
+    name2: '',
     rules: {
       not_empty: [v => !!v || 'This field is required']
     }
