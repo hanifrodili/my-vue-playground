@@ -6,7 +6,7 @@
          p {{convertDate(item.date)}}
       v-col.pa-0.schedule-container(cols="6")
         div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)" :class="{ active: selectedTime === item }")
-          p {{covertTime(item)}}
+          p {{covert24To12(item)}}
 </template>
 <script>
 export default {
@@ -79,7 +79,7 @@ export default {
       let schedule = this.selectedDate + ' ' + this.selectedTime
       this.$emit('input', schedule)
     },
-    getTimeRanges(interval, language = window.navigator.language, open, close, day) {
+    getTimeRanges(interval, open, close, day) {
       // day 0 = today
       const ranges = [];
       const [openHour,openMinute] = open.split(':')
@@ -87,23 +87,18 @@ export default {
       const current = new Date()
       const insert = new Date()
       const end = new Date()
-      const format = {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-      };
       for (let minutes = 0; minutes < 24 * 60; minutes = minutes + interval) {
-          insert.setHours(parseInt(openHour), parseInt(openMinute))
-          end.setHours(parseInt(closeHour),parseInt(closeMinute))
-          insert.setMinutes(minutes)
-          insert.setSeconds(0)
-          if (insert<end && insert>current && day === 0) {
-            ranges.push(insert.toLocaleTimeString(language, format))
-          // console.log(insert,end);
-          }
-          if(day > 0 && insert<end){
-            ranges.push(insert.toLocaleTimeString(language, format))
-          }
+        insert.setHours(parseInt(openHour), parseInt(openMinute))
+        end.setHours(parseInt(closeHour),parseInt(closeMinute))
+        insert.setMinutes(minutes)
+        let wtime = this.addLeadingZero(insert.getHours(),2)+':'+this.addLeadingZero(insert.getMinutes(),2)+':00'
+        if (insert<end && insert>current && day === 0) {
+          ranges.push(wtime)
+        // console.log(insert,end);
+        }
+        if(day > 0 && insert<end){
+          ranges.push(wtime)
+        }
       }
 
       return ranges;
@@ -115,10 +110,21 @@ export default {
         const date = new Date(new Date().getTime()+(index*24*60*60*1000))
         const formattedDate = date.getFullYear()+'-'+this.addLeadingZero((date.getMonth()+1),2)+'-'+this.addLeadingZero(date.getDate(),2)
         day.date = formattedDate
-        day.time = this.getTimeRanges(this.timeInterval,'my',this.openingHour[0],this.openingHour[1],index)
+        day.time = this.getTimeRanges(this.timeInterval,this.openingHour[0],this.openingHour[1],index)
         this.dateTimeList.push(day)
       }
       // console.log(this.dateTimeList);
+    },
+    covert24To12 (time) { //format 08:00:00
+      // Check correct time format and split into components
+      time = time.split(':')[0]+':'+time.split(':')[1]
+      time = time.match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+      if (time.length > 1) { // If time format correct
+        time = time.slice (1);  // Remove full string match value
+        time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+      }
+      return time.join (''); // return adjusted time or original string
     },
     convertDate(val){
       const today = new Date(new Date().getTime()+(0*24*60*60*1000))
@@ -139,29 +145,6 @@ export default {
       const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]
       let newDate = days[d.getDay()] + ', ' + this.addLeadingZero(d.getDate(),2) + ' ' + months[d.getMonth()]
       return newDate
-    },
-    covertTime(val){
-      if (val === '') {
-        return 'Select Date'
-      }
-      const insert = new Date()
-      const format = {
-        hour: 'numeric',
-        minute: 'numeric'
-      }
-      const hour= val.split(':')[0]
-      const min= val.split(':')[1]
-      insert.setHours(hour)
-      insert.setMinutes(min)
-      insert.setSeconds(0)
-      let newTime = insert.toLocaleTimeString('en',format)
-      return newTime
-      // if(newTime.split(':')[0].length === 1){
-      //   return '0'+newTime
-      // }else{
-      //   return newTime
-      // }
-      
     }
   }
 }
