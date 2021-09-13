@@ -1,5 +1,5 @@
 <template lang="pug">
-  .y-schedule-picker.mx-auto(:style="'max-width:'+width + ';' + 'height:'+height")
+  .y-schedule-picker.mx-auto(:style="'max-width:'+width + ';' + 'height:'+height" :class="{ 'theme--light': theme === 'light', 'theme--dark': theme === 'dark' }")
     v-row.ma-0(style="height:100%;")
       v-col.pa-0.schedule-container(cols="6")
         div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)" :class="{ active: selectedDate === item.date }")
@@ -42,12 +42,16 @@ export default {
   },
   mounted(){
     this.getDateTime(this.daysCount)
+    if (this.$vuetify.theme.dark) {
+      this.theme = 'dark'
+    }
   },
   data: () => ({
     dateTimeList: [{date: '',time:['']}],
     selectedDateIndex: 0,
     selectedDate: '',
-    selectedTime: ''
+    selectedTime: '',
+    theme: 'light'
   }),
   methods:{
     addLeadingZero(str,count){
@@ -195,6 +199,9 @@ export default {
   background : linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0) 80%, rgba(255,255,255,1) 100%);
   width    : 100%;
   height   : 100%;
+}
+.y-schedule-picker.theme--dark .row:after{
+   background : linear-gradient(0deg, rgba(18,18,18,1) 0%, rgba(18,18,18,0) 20%, rgba(18,18,18,0) 80%, rgba(18,18,18,1) 100%);
 }
 
 .schedule-item{
