@@ -41,6 +41,9 @@ export default {
     }
   },
   mounted(){
+    const [date,time] = this.value.split(' ')
+    this.selectedDate = date ? date : ''
+    this.selectedTime = time ? time : ''
     this.getDateTime(this.daysCount)
     if (this.$vuetify.theme.dark) {
       this.theme = 'dark'
@@ -113,7 +116,15 @@ export default {
         day.time = this.getTimeRanges(this.timeInterval,this.openingHour[0],this.openingHour[1],index)
         this.dateTimeList.push(day)
       }
-      // console.log(this.dateTimeList);
+      if (this.selectedDate === '') {
+        this.selectedDate = this.dateTimeList[0].date
+      }else{
+        this.selectedDateIndex = this.dateTimeList.findIndex(x => x.date === this.selectedDate)
+      }
+      if (this.selectedTime === '') {
+        this.selectedTime = this.dateTimeList[0].time[0]
+      }
+      // console.log(this.selectedDateIndex);
     },
     covert24To12 (time) { //format 08:00:00
       // Check correct time format and split into components
@@ -121,7 +132,7 @@ export default {
       time = time.match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
       if (time.length > 1) { // If time format correct
         time = time.slice (1);  // Remove full string match value
-        time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
         time[0] = +time[0] % 12 || 12; // Adjust hours
       }
       return time.join (''); // return adjusted time or original string

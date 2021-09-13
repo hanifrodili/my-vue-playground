@@ -10,7 +10,7 @@ export default {
   name: 'MySchedulePicker',
   components: {ySchedulePicker},
   data: ()=>({
-    dateTime: '',
+    dateTime: '2021-09-20 10:30:00',
     timeInterval: 30,
     days: 30,
     openingHour: ['09:00','20:30']
