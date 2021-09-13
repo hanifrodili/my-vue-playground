@@ -1,6 +1,6 @@
 <template lang="pug">
   .my-schedule-picker
-    y-schedule-picker.mb-2(v-model="dateTime" :time-interval="timeInterval" :days-count="days" :opening-hour="openingHour" width="100%")
+    y-schedule-picker.mb-2(v-model="dateTime" :params='params' bg-active='#e6edff' width="100%")
     p.text-center {{dateTime ? dateTime: 'Not Selected'}}
 </template>
 <script>
@@ -10,10 +10,12 @@ export default {
   name: 'MySchedulePicker',
   components: {ySchedulePicker},
   data: ()=>({
-    dateTime: '2021-09-20 10:30:00',
-    timeInterval: 30,
-    days: 30,
-    openingHour: ['09:00','20:30']
+    dateTime: '2021-10-07 11:30:00',
+    params: {
+      timeInterval: 30,
+      daysCount: 30,
+      openingHour: ['09:00','20:30'],
+    }
   })
 }
 </script>

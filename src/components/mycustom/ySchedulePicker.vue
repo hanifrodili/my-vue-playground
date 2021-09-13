@@ -1,11 +1,11 @@
 <template lang="pug">
-  .y-schedule-picker.mx-auto(:style="'max-width:'+width + ';' + 'height:'+height" :class="{ 'theme--light': theme === 'light', 'theme--dark': theme === 'dark' }")
+  .y-schedule-picker.mx-auto(:style="cssProps")
     v-row.ma-0(style="height:100%;")
       v-col.pa-0.schedule-container(cols="6")
-        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)" :class="{ active: selectedDate === item.date }")
+        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)" :class="{ active: selectedDate === item.date }" :id="'date'+index")
          p {{convertDate(item.date)}}
       v-col.pa-0.schedule-container(cols="6")
-        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)" :class="{ active: selectedTime === item }")
+        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)" :class="{ active: selectedTime === item }" :id="'time'+index")
           p {{covert24To12(item)}}
 </template>
 <script>
@@ -27,34 +27,46 @@ export default {
       type: String,
       default: "100px"
     },
-    daysCount: {
-      type: Number,
-      default: 30
+    bgActive: {
+      type: String,
+      default: '#dedede'
     },
-    timeInterval: {
-      type: Number,
-      default: 15
-    },
-    openingHour: {
-      type: Array,
-      default: () => ['08:00','20:00']
+    params: {
+      type: Object,
+      default: () => ({
+        timeInterval: 15,
+        daysCount: 7,
+        openingHour: ['08:00','22:00'],
+      })
     }
+  },
+  computed: {
+    cssProps () {
+      return {
+        '--bg-active': this.bgActive,
+        '--el-width': this.width,
+        '--el-height': this.height
+      }
+    },
   },
   mounted(){
     const [date,time] = this.value.split(' ')
     this.selectedDate = date ? date : ''
     this.selectedTime = time ? time : ''
-    this.getDateTime(this.daysCount)
-    if (this.$vuetify.theme.dark) {
-      this.theme = 'dark'
-    }
+    this.getDateTime(this.params.daysCount)
+    this.setSelected()
+    // const item = document.getElementById('date0')
+    // const container = document.getElementsByClassName('schedule-container')[1]
+    // const itemTop = item.offsetTop
+    // this.selectPos = itemTop - (container.offsetHeight/2) + (item.offsetHeight/2)
+    // document.getElementsByClassName('schedule-container')[0].addEventListener('scroll', this.scrollToSelectDate);
   },
   data: () => ({
     dateTimeList: [{date: '',time:['']}],
     selectedDateIndex: 0,
     selectedDate: '',
     selectedTime: '',
-    theme: 'light'
+    selectPos: 0
   }),
   methods:{
     addLeadingZero(str,count){
@@ -95,11 +107,11 @@ export default {
         end.setHours(parseInt(closeHour),parseInt(closeMinute))
         insert.setMinutes(minutes)
         let wtime = this.addLeadingZero(insert.getHours(),2)+':'+this.addLeadingZero(insert.getMinutes(),2)+':00'
-        if (insert<end && insert>current && day === 0) {
+        if (insert<=end && insert>current && day === 0) {
           ranges.push(wtime)
         // console.log(insert,end);
         }
-        if(day > 0 && insert<end){
+        if(day > 0 && insert<=end){
           ranges.push(wtime)
         }
       }
@@ -113,18 +125,35 @@ export default {
         const date = new Date(new Date().getTime()+(index*24*60*60*1000))
         const formattedDate = date.getFullYear()+'-'+this.addLeadingZero((date.getMonth()+1),2)+'-'+this.addLeadingZero(date.getDate(),2)
         day.date = formattedDate
-        day.time = this.getTimeRanges(this.timeInterval,this.openingHour[0],this.openingHour[1],index)
+        day.time = this.getTimeRanges(this.params.timeInterval,this.params.openingHour[0],this.params.openingHour[1],index)
         this.dateTimeList.push(day)
       }
+    },
+    setSelected(){
       if (this.selectedDate === '') {
         this.selectedDate = this.dateTimeList[0].date
       }else{
         this.selectedDateIndex = this.dateTimeList.findIndex(x => x.date === this.selectedDate)
+        setTimeout(() => {
+          const selected = document.getElementById('date'+this.selectedDateIndex)
+          const container = document.getElementsByClassName('schedule-container')[0]
+          const topPos = selected.offsetTop
+          const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
+          container.scrollTop = halfPos
+        }, 1);
       }
       if (this.selectedTime === '') {
         this.selectedTime = this.dateTimeList[0].time[0]
+      }else{
+        const selecteTimeIndex = this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime)
+        setTimeout(() => {
+          const selected = document.getElementById('time'+selecteTimeIndex)
+          const container = document.getElementsByClassName('schedule-container')[1]
+          const topPos = selected.offsetTop
+          const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
+          container.scrollTop = halfPos
+        }, 1);
       }
-      // console.log(this.selectedDateIndex);
     },
     covert24To12 (time) { //format 08:00:00
       // Check correct time format and split into components
@@ -156,7 +185,22 @@ export default {
       const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]
       let newDate = days[d.getDay()] + ', ' + this.addLeadingZero(d.getDate(),2) + ' ' + months[d.getMonth()]
       return newDate
-    }
+    },
+    // scrollToSelectDate(){
+    //   // console.log(this.selectPos);
+    //   const parentPos = document.getElementsByClassName('schedule-container')[0].getBoundingClientRect()
+    //   const dates = document.getElementsByClassName('date')
+    //   dates.forEach(date => {
+    //     const datePos = date.getBoundingClientRect()
+    //     const relativePos = datePos.top - parentPos.top
+    //     // console.log(relativePos);
+    //     if (relativePos === this.selectPos) {
+    //       date.classList.add("active")
+    //     }else{
+    //       date.classList.remove("active")
+    //     }
+    //   });
+    // }
   }
 }
 </script>
@@ -164,6 +208,8 @@ export default {
 .y-schedule-picker{
   padding: 4px 16px;
   width: 100%;
+  max-width: var(--el-width);
+  height: var(--el-height);
   transition: padding .3s ease-in-out;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -181,6 +227,7 @@ export default {
   overflow: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  scroll-behavior: smooth;
 }
 .row{
   position: relative;
@@ -208,17 +255,27 @@ export default {
 .schedule-item p{
   margin-bottom: 0;
   font-size: 15px;
+  user-select: none;
+  /* color: rgb(59, 59, 59); */
+}
+.schedule-item.active{
+  background-color: var(--bg-active);
+}
+.schedule-item.active p{
+  color: black;
+  font-weight: 500;
 }
 .schedule-item.date.active{
-  background-color: rgba(0,0,0,.3);
   border-radius: 5px 0 0 5px;
 }
 .schedule-item.time.active{
-  background-color: rgba(0,0,0,.3);
   border-radius: 0 5px 5px 0;
 }
 .schedule-item:first-child{
   margin-top: 32px;
+}
+.schedule-item:last-child{
+  margin-bottom: 32px;
 }
 
 @media (max-width: 400px){
