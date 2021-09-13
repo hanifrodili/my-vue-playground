@@ -6,7 +6,8 @@
          p {{convertDate(item.date)}}
       v-col.pa-0.schedule-container(cols="6")
         div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)" :class="{ active: selectedTime === item }")
-          p {{covertTime(item)}}
+          p {{item}}
+          //- p {{covertTime(item)}}
 </template>
 <script>
 export default {
