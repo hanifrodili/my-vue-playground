@@ -115,7 +115,7 @@ export default {
         const date = new Date(new Date().getTime()+(index*24*60*60*1000))
         const formattedDate = date.getFullYear()+'-'+this.addLeadingZero((date.getMonth()+1),2)+'-'+this.addLeadingZero(date.getDate(),2)
         day.date = formattedDate
-        day.time = this.getTimeRanges(this.timeInterval,'en',this.openingHour[0],this.openingHour[1],index)
+        day.time = this.getTimeRanges(this.timeInterval,'my',this.openingHour[0],this.openingHour[1],index)
         this.dateTimeList.push(day)
       }
       // console.log(this.dateTimeList);
@@ -155,11 +155,12 @@ export default {
       insert.setMinutes(min)
       insert.setSeconds(0)
       let newTime = insert.toLocaleTimeString('en',format)
-      if(newTime.split(':')[0].length === 1){
-        return '0'+newTime
-      }else{
-        return newTime
-      }
+      return newTime
+      // if(newTime.split(':')[0].length === 1){
+      //   return '0'+newTime
+      // }else{
+      //   return newTime
+      // }
       
     }
   }
@@ -169,6 +170,7 @@ export default {
 .y-schedule-picker{
   padding: 4px 16px;
   width: 100%;
+  transition: padding .3s ease-in-out;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .schedule-container::-webkit-scrollbar {
@@ -223,5 +225,11 @@ export default {
 }
 .schedule-item:first-child{
   margin-top: 32px;
+}
+
+@media (max-width: 400px){
+  .y-schedule-picker{
+    padding: 4px 0px;
+  }
 }
 </style>
