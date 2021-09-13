@@ -46,6 +46,7 @@ export default {
     if (this.$vuetify.theme.dark) {
       this.theme = 'dark'
     }
+
   },
   data: () => ({
     dateTimeList: [{date: '',time:['']}],
@@ -116,7 +117,7 @@ export default {
         const date = new Date(new Date().getTime()+(index*24*60*60*1000))
         const formattedDate = date.getFullYear()+'-'+this.addLeadingZero((date.getMonth()+1),2)+'-'+this.addLeadingZero(date.getDate(),2)
         day.date = formattedDate
-        day.time = this.getTimeRanges(this.timeInterval,'my',this.openingHour[0],this.openingHour[1],index)
+        day.time = this.getTimeRanges(this.timeInterval,'en',this.openingHour[0],this.openingHour[1],index)
         this.dateTimeList.push(day)
       }
       // console.log(this.dateTimeList);
