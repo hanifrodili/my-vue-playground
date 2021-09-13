@@ -45,6 +45,9 @@ export default {
   font-size: 15px !important;
   line-height: 24px !important;
 }
+::v-deep .theme--dark.v-input input, .theme--dark.v-input textarea{
+  color: #2B2525 ;
+}
 ::v-deep .v-input--has-state.error--text{
   color: red;
 }

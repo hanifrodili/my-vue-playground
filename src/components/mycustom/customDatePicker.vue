@@ -29,27 +29,28 @@ export default {
 @import url(`../../assets/materialdesignicons-webfont.ttf`);
 
 ::v-deep .v-date-picker-title__year{
-    display: none;
+  display: none;
 }
 ::v-deep .v-date-picker-title__date {
-    display: none;
+  display: none;
 }
 ::v-deep .v-picker__title {
-    color: black;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    padding: 0;
+  /* color: black;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px; */
+  padding: 0;
 }
 ::v-deep .v-picker__body{
   width: 100% !important;
 }
-::v-deep .v-picker__title__btn{
-  /* border-top: 1px solid var(--v-basic300); */
+/* ::v-deep .v-picker__title__btn{
+  border-top: 1px solid var(--v-basic300);
   border-bottom: 1px solid rgba(0,0,0,.5);
   padding: 8px 0;
   margin:0;
-}
-::v-deep .v-date-picker-header{
+} */
+
+::v-deep .v-date-picker-header{ /*month and arrow */
   /* border-bottom: 1px solid rgb(244,244,244);
   border-top: 1px solid rgb(244,244,244); */
   height: 61px;
@@ -59,7 +60,7 @@ export default {
   position: absolute !important;
   width: 24px;
   border-radius: 5px;
-  color: black !important;
+  color: black !important; /*change month and arrow color*/
 }
 
 ::v-deep .v-date-picker-header > button[aria-label="Previous month"],
@@ -81,49 +82,37 @@ export default {
   content: "\F0140";
   margin-left: 12px;
 }
-
-::v-deep .v-time-picker-title__time{
-  color: black
-}
-::v-deep .v-time-picker-title__ampm{
-  color: black;
-  margin-bottom:0;
-}
-/* ::v-deep .v-time-picker-title{
-    border-bottom: 1px solid rgb(244,244,244);
-    border-top: 1px solid rgb(244,244,244);
-} */
 ::v-deep .v-date-picker-table th {
-    font-size: 15px;
-    color: rgba(143, 155, 179, 1) !important;
-    height: 44px;
-    border-bottom: 1px solid rgb(244,244,244);
-    border-top: 1px solid rgb(244,244,244);
+  font-size: 15px;
+  color: rgba(143, 155, 179, 1) !important; /*change days name color text*/
+  height: 44px;
+  border-bottom: 1px solid rgb(244,244,244);
+  border-top: 1px solid rgb(244,244,244);
 }
 
 ::v-deep .v-date-picker-table--date {
-    height: 290px;
-    padding: 0;
+  height: 290px;
+  padding: 0;
 }
 
 ::v-deep .v-date-picker-table .v-btn {
-    height: 44px;
-    width: 44px;
-    font-size: 15px !important;
-    font-weight: 600;
-    border-radius: 4px !important;
+  height: 44px;
+  width: 44px;
+  font-size: 15px !important;
+  font-weight: 600;
+  border-radius: 4px !important;
 }
 ::v-deep .v-date-picker-table__current{
-  border: 1px solid black;
-  color: white;
-  background-color: rgba(0,0,0,.8);
+  border: 2px solid black; /*change current date color border*/
+  color: white; /*change current date color text*/
+  background-color: rgba(0,0,0,.8); /*change current date color bg*/
 }
 ::v-deep .v-date-picker-table .v-btn.v-btn--disabled {
-    color:rgba(143, 155, 179, 1) !important;
+  color:rgba(143, 155, 179, 1) !important; /*change disabled date color text*/
 }
 
 ::v-deep .v-date-picker-table .v-btn.v-btn--active {
-    background-color: rgba(102, 144, 255, 1);
+  background-color: rgba(102, 144, 255, 1); /*change active/selected date color bg*/
 }
 
 ::v-deep .v-date-picker-table--date .v-date-picker-table__events{
@@ -135,23 +124,20 @@ export default {
   height: 5px;
 }
 
-.v-text-field--outlined >>> fieldset {
-  border-color: rgba(0,0,0,.5);
-}
 ::v-deep .v-date-picker-table--month td .v-btn {
-    margin: 0 auto;
-    max-width: 140px;
-    min-width: 40px;
-    width: 100%;
-    font-size: 15px !important;
-    font-weight: 600 !important;
+  margin: 0 auto;
+  max-width: 140px;
+  min-width: 40px;
+  width: 100%;
+  font-size: 15px !important;
+  font-weight: 600 !important;
 }
 ::v-deep .v-date-picker-years {
-    font-size: 15px;
-    font-weight: 600;
-    height: 290px;
-    list-style-type: none;
-    overflow: auto;
-    text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  height: 290px;
+  list-style-type: none;
+  overflow: auto;
+  text-align: center;
 }
 </style>

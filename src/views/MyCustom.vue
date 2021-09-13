@@ -1,18 +1,25 @@
 <template lang="pug">
-  .mycustom.pa-5.mx-auto(style="max-width:800px; margin-top:40px")
+  .mycustom.pa-5.mx-auto(style="max-width:600px; margin-top:40px")
     label Text Field
-    custom-text-field
+    custom-text-field.pa-2.rounded-lg.elevation-2
     div.my-9
     label Date Picker (with range)
-    custom-date-picker
+    custom-date-picker.pa-2.rounded-lg.elevation-2
+    div.my-9
+    label Schedule Picker
+    custom-schedule-picker.pa-2.rounded-lg.elevation-2
 </template>
 
 <script>
 import CustomTextField from '@/components/mycustom/customTextField.vue'
-import customDatePicker from '@/components/mycustom/customDatePicker.vue'
+import CustomDatePicker from '@/components/mycustom/customDatePicker.vue'
+import CustomSchedulePicker from '@/components/mycustom/customSchedulePicker.vue'
 export default {
   name: 'MyCustom',
-  components: { CustomTextField, customDatePicker }
+  data: () => ({
+    testValue: ''
+  }),
+  components: { CustomTextField, CustomDatePicker, CustomSchedulePicker }
 }
 </script>
 <style scoped>

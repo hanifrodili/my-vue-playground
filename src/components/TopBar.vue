@@ -12,7 +12,7 @@
           v-btn(large depressed text)
             span.mr-2 About
         v-menu(offset-y style="z-index:999" transition="slide-y-transition")
-          template(v-slot:activator="{ on }")
+          //- template(v-slot:activator="{ on }")
             div.mx-0.mb-0(icon small v-on="on")
               v-btn(large depressed text)
                 | Page Builder
@@ -45,7 +45,7 @@
             v-list-item
               v-list-item-title About
           v-menu(offset-y transition="slide-y-transition")
-            template(v-slot:activator="{ on }")
+            //- template(v-slot:activator="{ on }")
               v-list-item(v-on="on")
                 v-list-item-title(icon)
                   | Page Builder
