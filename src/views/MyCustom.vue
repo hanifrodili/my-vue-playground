@@ -7,7 +7,7 @@
     custom-date-picker.pa-2.rounded-lg.elevation-2
     div.my-9
     label Schedule Picker
-    custom-schedule-picker.pa-2.rounded-lg.elevation-2
+    custom-schedule-picker.py-2.rounded-lg.elevation-2
 </template>
 
 <script>

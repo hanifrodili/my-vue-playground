@@ -1,11 +1,11 @@
 <template lang="pug">
   .y-schedule-picker.mx-auto(:style="cssProps")
     v-row.ma-0(style="height:100%;")
-      v-col.pa-0.schedule-container(cols="7")
-        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index"  :class="{ active: selectedDate === item.date }" :id="'date'+index")
+      v-col.pa-0.schedule-container(cols="8")
+        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)"  :class="{ active: selectedDate === item.date }" :id="'date'+index")
          p {{convertDate(item.date)}}
-      v-col.pa-0.schedule-container(cols="5")
-        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index"  :class="{ active: selectedTime === item }" :id="'time'+index")
+      v-col.pa-0.schedule-container(cols="4")
+        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)"  :class="{ active: selectedTime === item }" :id="'time'+index")
           p {{covert24To12(item)}}
 </template>
 <script>
@@ -69,7 +69,9 @@ export default {
     selectedDate: '',
     selectedTime: '',
     selectPosTop: 0,
-    selectPosBottom: 0
+    selectPosBottom: 0,
+    autoScroll: false,
+    isClicked: false
   }),
   methods:{
     addLeadingZero(str,count){
@@ -84,31 +86,39 @@ export default {
       return str
     },
     selectDate(val,index){
+      this.isClicked = true
       this.selectedDateIndex = index
       this.selectedDate = val
       setTimeout(() => {
-          const selected = document.getElementById('date'+this.selectedDateIndex)
-          const container = document.getElementsByClassName('schedule-container')[0]
-          const topPos = selected.offsetTop
-          const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
-          container.scrollTop = halfPos
-        }, 1);
+        const selected = document.getElementById('date'+this.selectedDateIndex)
+        const container = document.getElementsByClassName('schedule-container')[0]
+        const topPos = selected.offsetTop
+        const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
+        container.scrollTop = halfPos
+      }, 100);
+      setTimeout(() => {
+        this.isClicked = false
+      }, 200);
       let schedule = this.selectedDate + ' ' + this.selectedTime
       this.$emit('input', schedule)
     },
     selectTime(val){
+      this.isClicked = true
       if (val === '') {
         return
       }
       this.selectedTime = val
       const selecteTimeIndex = this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime)
       setTimeout(() => {
-          const selected = document.getElementById('time'+selecteTimeIndex)
-          const container = document.getElementsByClassName('schedule-container')[1]
-          const topPos = selected.offsetTop
-          const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
-          container.scrollTop = halfPos
-        }, 1);
+        const selected = document.getElementById('time'+selecteTimeIndex)
+        const container = document.getElementsByClassName('schedule-container')[1]
+        const topPos = selected.offsetTop
+        const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
+        container.scrollTop = halfPos
+      }, 100);
+      setTimeout(() => {
+        this.isClicked = false
+      }, 200);
       let schedule = this.selectedDate + ' ' + this.selectedTime
       this.$emit('input', schedule)
     },
@@ -148,6 +158,7 @@ export default {
       }
     },
     setSelected(){
+      this.autoScroll = true
       if (this.selectedDate === '') {
         this.selectedDate = this.dateTimeList[0].date
       }else{
@@ -174,10 +185,10 @@ export default {
       }
       setTimeout(() => {
         document.getElementsByClassName('schedule-container')[0].addEventListener('scroll', this.scrollToSelectDate);
-      }, 500);
+      }, 1000);
       setTimeout(() => {
         document.getElementsByClassName('schedule-container')[1].addEventListener('scroll', this.scrollToSelectTime);
-      }, 501);
+      }, 1001);
     },
     covert24To12 (time) { //format 08:00:00
       // Check correct time format and split into components
@@ -212,52 +223,59 @@ export default {
     },
     scrollToSelectDate(){
       // console.log(this.selectPosTop, this.selectPosBottom);
-      const parentPos = document.getElementsByClassName('schedule-container')[0].getBoundingClientRect()
-      const dates = document.getElementsByClassName('date')
-      dates.forEach((date,index) => {
-        const datePos = date.getBoundingClientRect()
-        let relativePos = (datePos.top - parentPos.top)
-        relativePos = relativePos + (relativePos/2)
-        // console.log(relativePos);
-        // console.log(date);
-        if (relativePos > this.selectPosTop && relativePos < this.selectPosBottom) {
-          date.classList.add("active")
-          // console.log(this.dateTimeList[index].date);
-          this.selectDate(this.dateTimeList[index].date, index)
-          // console.log(date);
-          // console.log(this.selectPosTop,relativePos,this.selectPosBottom);
-        }else{
-          date.classList.remove("active")
-        }
-      });
+      if (!this.autoScroll) {
+        const parentPos = document.getElementsByClassName('schedule-container')[0].getBoundingClientRect()
+        const dates = document.getElementsByClassName('date')
+        dates.forEach((date,index) => {
+          const datePos = date.getBoundingClientRect()
+          let relativePos = (datePos.top - parentPos.top)
+          relativePos = relativePos + (relativePos/2)
+          if (relativePos > this.selectPosTop && relativePos < this.selectPosBottom) {
+            date.classList.add("active")
+            if (!this.isClicked) { 
+              this.selectDate(this.dateTimeList[index].date, index)
+            }
+          }else{
+            date.classList.remove("active")
+          }
+        });
+      }else{
+        this.autoScroll = false
+      }
     },
     scrollToSelectTime(){
       // console.log(this.selectPosTop, this.selectPosBottom);
-      const parentPos = document.getElementsByClassName('schedule-container')[1].getBoundingClientRect()
-      const times = document.getElementsByClassName('time')
-      times.forEach((time,index) => {
-        const timePos = time.getBoundingClientRect()
-        let relativePos = timePos.top - parentPos.top
-        relativePos = relativePos + (relativePos/2)
-        // console.log(relativePos);
-        // console.log(time);
-        if (relativePos > this.selectPosTop && relativePos < this.selectPosBottom) {
-          time.classList.add("active")
-          // console.log(this.dateTimeList[index].date);
-          this.selectTime(this.dateTimeList[this.selectedDateIndex].time[index])
-          // console.log(date);
-          // console.log(this.selectPosTop,relativePos,this.selectPosBottom);
-        }else{
-          time.classList.remove("active")
-        }
-      });
+      if (!this.autoScroll) {
+        const parentPos = document.getElementsByClassName('schedule-container')[1].getBoundingClientRect()
+        const times = document.getElementsByClassName('time')
+        times.forEach((time,index) => {
+          const timePos = time.getBoundingClientRect()
+          let relativePos = timePos.top - parentPos.top
+          relativePos = relativePos + (relativePos/2)
+          // console.log(relativePos);
+          // console.log(time);
+          if (relativePos > this.selectPosTop && relativePos < this.selectPosBottom) {
+            time.classList.add("active")
+            // console.log(this.dateTimeList[index].date);
+            if (!this.isClicked) {
+              this.selectTime(this.dateTimeList[this.selectedDateIndex].time[index])
+            }
+            // console.log(date);
+            // console.log(this.selectPosTop,relativePos,this.selectPosBottom);
+          }else{
+            time.classList.remove("active")
+          }
+        });
+      }else{
+        this.autoScroll = false
+      }
     }
   }
 }
 </script>
 <style scoped>
 .y-schedule-picker{
-  padding: 4px 16px;
+  padding: 4px 8px;
   width: 100%;
   max-width: var(--el-width);
   height: var(--el-height);
@@ -290,7 +308,7 @@ export default {
   bottom: 0;
   left: 0;
   pointer-events   : none;
-  background : linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0) 80%, rgba(255,255,255,1) 100%);
+  background : linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 75%, rgba(255,255,255,1) 100%);
   width    : 100%;
   height   : 100%;
 }
@@ -339,9 +357,9 @@ export default {
   margin-bottom: 54px;
 }
 
-@media (max-width: 400px){
+/* @media (max-width: 400px){
   .y-schedule-picker{
     padding: 4px 0px;
   }
-}
+} */
 </style>
