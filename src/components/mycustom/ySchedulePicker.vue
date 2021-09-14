@@ -1,11 +1,11 @@
 <template lang="pug">
   .y-schedule-picker.mx-auto(:style="cssProps")
     v-row.ma-0(style="height:100%;")
-      v-col.pa-0.schedule-container(cols="6")
-        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)" :class="{ active: selectedDate === item.date }" :id="'date'+index")
+      v-col.pa-0.schedule-container(cols="7")
+        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index"  :class="{ active: selectedDate === item.date }" :id="'date'+index")
          p {{convertDate(item.date)}}
-      v-col.pa-0.schedule-container(cols="6")
-        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)" :class="{ active: selectedTime === item }" :id="'time'+index")
+      v-col.pa-0.schedule-container(cols="5")
+        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index"  :class="{ active: selectedTime === item }" :id="'time'+index")
           p {{covert24To12(item)}}
 </template>
 <script>
@@ -25,7 +25,7 @@ export default {
     },
     height: {
       type: String,
-      default: "100px"
+      default: "151px"
     },
     bgActive: {
       type: String,
@@ -59,8 +59,8 @@ export default {
     const container = document.getElementsByClassName('schedule-container')[1]
     const itemTop = container.offsetTop
     // this.selectPosTop = itemTop
-    this.selectPosTop = itemTop + (container.offsetHeight/2) - (32/2)
-    this.selectPosBottom = itemTop + (container.offsetHeight/2) + (32/2)
+    this.selectPosTop = itemTop + (container.offsetHeight/2) - (35/2)
+    this.selectPosBottom = itemTop + (container.offsetHeight/2) + (35/2)
     
   },
   data: () => ({
@@ -299,14 +299,24 @@ export default {
 }
 
 .schedule-item{
-  padding: 5px;
+  padding: 0;
+  padding-top: 7px;
   scroll-snap-align: center;
+  height: 35px;
+  color: #848484;
   /* scroll-snap-stop: always; */
+}
+.schedule-container:nth-child(1) .schedule-item{
+  padding-left: 24px;
+}
+.schedule-container:nth-child(2) .schedule-item{
+  padding-right: 24px;
 }
 .schedule-item p{
   margin-bottom: 0;
   font-size: 15px;
   user-select: none;
+  font-weight: 400;
   /* color: rgb(59, 59, 59); */
 }
 .schedule-item.active{
@@ -314,7 +324,7 @@ export default {
 }
 .schedule-item.active p{
   color: black;
-  font-weight: 500;
+  font-weight: 600;
 }
 .schedule-item.date.active{
   border-radius: 5px 0 0 5px;
@@ -323,10 +333,10 @@ export default {
   border-radius: 0 5px 5px 0;
 }
 .schedule-item:first-child{
-  margin-top: 32px;
+  margin-top: 54px;
 }
 .schedule-item:last-child{
-  margin-bottom: 32px;
+  margin-bottom: 54px;
 }
 
 @media (max-width: 400px){
