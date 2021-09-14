@@ -162,7 +162,12 @@ export default {
       if (this.selectedDate === '') {
         this.selectedDate = this.dateTimeList[0].date
       }else{
-        this.selectedDateIndex = this.dateTimeList.findIndex(x => x.date === this.selectedDate)
+        const ind = this.dateTimeList.findIndex(x => x.date === this.selectedDate)
+        if (ind>-1) {
+          this.selectedDateIndex = ind
+        }else{
+          this.selectedDate = this.dateTimeList[0].date
+        }
         setTimeout(() => {
           const selected = document.getElementById('date'+this.selectedDateIndex)
           const container = document.getElementsByClassName('schedule-container')[0]
@@ -174,9 +179,12 @@ export default {
       if (this.selectedTime === '') {
         this.selectedTime = this.dateTimeList[0].time[0]
       }else{
-        const selecteTimeIndex = this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime)
+        const selectedTimeIndex = this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime) > -1 ? this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime) : 0
+        if (selectedTimeIndex === 0) {
+          this.selectedTime = this.dateTimeList[0].time[0]
+        }
         setTimeout(() => {
-          const selected = document.getElementById('time'+selecteTimeIndex)
+          const selected = document.getElementById('time'+selectedTimeIndex)
           const container = document.getElementsByClassName('schedule-container')[1]
           const topPos = selected.offsetTop
           const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
