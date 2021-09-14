@@ -216,10 +216,11 @@ export default {
       const dates = document.getElementsByClassName('date')
       dates.forEach((date,index) => {
         const datePos = date.getBoundingClientRect()
-        const relativePos = datePos.top - parentPos.top
+        let relativePos = (datePos.top - parentPos.top)
+        relativePos = relativePos + (relativePos/2)
         // console.log(relativePos);
         // console.log(date);
-        if (relativePos === this.selectPosTop && relativePos < this.selectPosBottom) {
+        if (relativePos > this.selectPosTop && relativePos < this.selectPosBottom) {
           date.classList.add("active")
           // console.log(this.dateTimeList[index].date);
           this.selectDate(this.dateTimeList[index].date, index)
@@ -236,10 +237,11 @@ export default {
       const times = document.getElementsByClassName('time')
       times.forEach((time,index) => {
         const timePos = time.getBoundingClientRect()
-        const relativePos = timePos.top - parentPos.top
+        let relativePos = timePos.top - parentPos.top
+        relativePos = relativePos + (relativePos/2)
         // console.log(relativePos);
         // console.log(time);
-        if (relativePos === this.selectPosTop && relativePos < this.selectPosBottom) {
+        if (relativePos > this.selectPosTop && relativePos < this.selectPosBottom) {
           time.classList.add("active")
           // console.log(this.dateTimeList[index].date);
           this.selectTime(this.dateTimeList[this.selectedDateIndex].time[index])
