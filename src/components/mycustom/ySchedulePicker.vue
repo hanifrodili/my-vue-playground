@@ -56,17 +56,20 @@ export default {
     this.getDateTime(this.params.daysCount)
     this.setSelected()
     // const item = document.getElementById('date0')
-    // const container = document.getElementsByClassName('schedule-container')[1]
-    // const itemTop = item.offsetTop
-    // this.selectPos = itemTop - (container.offsetHeight/2) + (item.offsetHeight/2)
-    // document.getElementsByClassName('schedule-container')[0].addEventListener('scroll', this.scrollToSelectDate);
+    const container = document.getElementsByClassName('schedule-container')[1]
+    const itemTop = container.offsetTop
+    // this.selectPosTop = itemTop
+    this.selectPosTop = itemTop + (container.offsetHeight/2) - (32/2)
+    this.selectPosBottom = itemTop + (container.offsetHeight/2) + (32/2)
+    
   },
   data: () => ({
     dateTimeList: [{date: '',time:['']}],
     selectedDateIndex: 0,
     selectedDate: '',
     selectedTime: '',
-    selectPos: 0
+    selectPosTop: 0,
+    selectPosBottom: 0
   }),
   methods:{
     addLeadingZero(str,count){
@@ -83,6 +86,13 @@ export default {
     selectDate(val,index){
       this.selectedDateIndex = index
       this.selectedDate = val
+      setTimeout(() => {
+          const selected = document.getElementById('date'+this.selectedDateIndex)
+          const container = document.getElementsByClassName('schedule-container')[0]
+          const topPos = selected.offsetTop
+          const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
+          container.scrollTop = halfPos
+        }, 1);
       let schedule = this.selectedDate + ' ' + this.selectedTime
       this.$emit('input', schedule)
     },
@@ -91,6 +101,14 @@ export default {
         return
       }
       this.selectedTime = val
+      const selecteTimeIndex = this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime)
+      setTimeout(() => {
+          const selected = document.getElementById('time'+selecteTimeIndex)
+          const container = document.getElementsByClassName('schedule-container')[1]
+          const topPos = selected.offsetTop
+          const halfPos = topPos - (container.offsetHeight/2) + (selected.offsetHeight/2)
+          container.scrollTop = halfPos
+        }, 1);
       let schedule = this.selectedDate + ' ' + this.selectedTime
       this.$emit('input', schedule)
     },
@@ -154,6 +172,12 @@ export default {
           container.scrollTop = halfPos
         }, 1);
       }
+      setTimeout(() => {
+        document.getElementsByClassName('schedule-container')[0].addEventListener('scroll', this.scrollToSelectDate);
+      }, 500);
+      setTimeout(() => {
+        document.getElementsByClassName('schedule-container')[1].addEventListener('scroll', this.scrollToSelectTime);
+      }, 501);
     },
     covert24To12 (time) { //format 08:00:00
       // Check correct time format and split into components
@@ -186,21 +210,46 @@ export default {
       let newDate = days[d.getDay()] + ', ' + this.addLeadingZero(d.getDate(),2) + ' ' + months[d.getMonth()]
       return newDate
     },
-    // scrollToSelectDate(){
-    //   // console.log(this.selectPos);
-    //   const parentPos = document.getElementsByClassName('schedule-container')[0].getBoundingClientRect()
-    //   const dates = document.getElementsByClassName('date')
-    //   dates.forEach(date => {
-    //     const datePos = date.getBoundingClientRect()
-    //     const relativePos = datePos.top - parentPos.top
-    //     // console.log(relativePos);
-    //     if (relativePos === this.selectPos) {
-    //       date.classList.add("active")
-    //     }else{
-    //       date.classList.remove("active")
-    //     }
-    //   });
-    // }
+    scrollToSelectDate(){
+      // console.log(this.selectPosTop, this.selectPosBottom);
+      const parentPos = document.getElementsByClassName('schedule-container')[0].getBoundingClientRect()
+      const dates = document.getElementsByClassName('date')
+      dates.forEach((date,index) => {
+        const datePos = date.getBoundingClientRect()
+        const relativePos = datePos.top - parentPos.top
+        // console.log(relativePos);
+        // console.log(date);
+        if (relativePos === this.selectPosTop && relativePos < this.selectPosBottom) {
+          date.classList.add("active")
+          // console.log(this.dateTimeList[index].date);
+          this.selectDate(this.dateTimeList[index].date, index)
+          // console.log(date);
+          // console.log(this.selectPosTop,relativePos,this.selectPosBottom);
+        }else{
+          date.classList.remove("active")
+        }
+      });
+    },
+    scrollToSelectTime(){
+      // console.log(this.selectPosTop, this.selectPosBottom);
+      const parentPos = document.getElementsByClassName('schedule-container')[1].getBoundingClientRect()
+      const times = document.getElementsByClassName('time')
+      times.forEach((time,index) => {
+        const timePos = time.getBoundingClientRect()
+        const relativePos = timePos.top - parentPos.top
+        // console.log(relativePos);
+        // console.log(time);
+        if (relativePos === this.selectPosTop && relativePos < this.selectPosBottom) {
+          time.classList.add("active")
+          // console.log(this.dateTimeList[index].date);
+          this.selectTime(this.dateTimeList[this.selectedDateIndex].time[index])
+          // console.log(date);
+          // console.log(this.selectPosTop,relativePos,this.selectPosBottom);
+        }else{
+          time.classList.remove("active")
+        }
+      });
+    }
   }
 }
 </script>
