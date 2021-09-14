@@ -13,7 +13,7 @@ export default {
     dateTime: '2021-10-07 11:30:00',
     params: {
       timeInterval: 30,
-      daysCount: 7,
+      daysCount: 30,
       openingHour: ['09:00','20:30'],
     }
   })
