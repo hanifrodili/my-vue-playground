@@ -7,6 +7,7 @@
     custom-date-picker.pa-2.rounded-lg.elevation-2
     div.my-9
     label Schedule Picker
+    v-btn.btn.warning.mb-2( @click="showAlert" style="font-size:10px") Click here before scroll ;)
     custom-schedule-picker.py-2.rounded-lg.elevation-2
 </template>
 
@@ -19,7 +20,12 @@ export default {
   data: () => ({
     testValue: ''
   }),
-  components: { CustomTextField, CustomDatePicker, CustomSchedulePicker }
+  components: { CustomTextField, CustomDatePicker, CustomSchedulePicker },
+  methods:{
+    showAlert(){
+      alert('Reason is to detect user interaction before browser allowing vibration. TQ ;)')
+    }
+  }
 }
 </script>
 <style scoped>
