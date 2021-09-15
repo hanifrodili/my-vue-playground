@@ -2,10 +2,10 @@
   .y-schedule-picker.mx-auto(:style="cssProps")
     v-row.ma-0(style="height:100%;")
       v-col.pa-0.schedule-container(cols="8")
-        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)"  :class="{ active: selectedDate === item.date }" :id="'date'+index")
+        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)"  :class="{ active: selectedDateIndex === index , 'closed': item.date === null}" :id="'date'+index")
          p {{convertDate(item.date)}}
       v-col.pa-0.schedule-container(cols="4")
-        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)"  :class="{ active: selectedTime === item }" :id="'time'+index")
+        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)"  :class="{ active: selectedTime === item }" :id="'time'+index" v-if="item" )
           p {{covert24To12(item)}}
 </template>
 <script>
@@ -37,6 +37,7 @@ export default {
         timeInterval: 15,
         daysCount: 7,
         openingHour: ['08:00','22:00'],
+        daysOff: []
       })
     }
   },
@@ -55,6 +56,7 @@ export default {
     this.selectedTime = time ? time : ''
     this.getDateTime(this.params.daysCount)
     this.setSelected()
+    this.setEventListener()
     // const item = document.getElementById('date0')
     const container = document.getElementsByClassName('schedule-container')[1]
     const itemTop = container.offsetTop
@@ -152,8 +154,13 @@ export default {
         let day = {}
         const date = new Date(new Date().getTime()+(index*24*60*60*1000))
         const formattedDate = date.getFullYear()+'-'+this.addLeadingZero((date.getMonth()+1),2)+'-'+this.addLeadingZero(date.getDate(),2)
-        day.date = formattedDate
-        day.time = this.getTimeRanges(this.params.timeInterval,this.params.openingHour[0],this.params.openingHour[1],index)
+        if (!this.params.daysOff.includes(formattedDate)) {
+          day.date = formattedDate
+          day.time = this.getTimeRanges(this.params.timeInterval,this.params.openingHour[0],this.params.openingHour[1],index)
+        }else{
+          day.date=null
+          day.time=null
+        }
         this.dateTimeList.push(day)
       }
     },
@@ -191,11 +198,15 @@ export default {
           container.scrollTop = halfPos
         }, 1);
       }
+    },
+    setEventListener(){
       setTimeout(() => {
         document.getElementsByClassName('schedule-container')[0].addEventListener('scroll', this.scrollToSelectDate);
+        document.getElementsByClassName('schedule-container')[0].addEventListener('wheel', this.scrollToSelectDateMouse);
       }, 1000);
       setTimeout(() => {
         document.getElementsByClassName('schedule-container')[1].addEventListener('scroll', this.scrollToSelectTime);
+        document.getElementsByClassName('schedule-container')[1].addEventListener('wheel', this.scrollToSelectTimeMouse);
       }, 1001);
     },
     covert24To12 (time) { //format 08:00:00
@@ -223,11 +234,61 @@ export default {
       if (val === '') {
         return '-'
       }
+      if (!val) {
+        return 'Close'
+      }
       const d = new Date(val);
       const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
       const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]
       let newDate = days[d.getDay()] + ', ' + this.addLeadingZero(d.getDate(),2) + ' ' + months[d.getMonth()]
       return newDate
+    },
+    scrollToSelectDateMouse(e){
+      const scrollVal = e.wheelDeltaY
+      let isWheel = false
+      if (Math.abs(scrollVal) >= 120) {
+        isWheel = true
+      }
+      if (isWheel) {
+        e.preventDefault()
+        if (scrollVal < 0) {
+          const next = this.selectedDateIndex + 1
+          const len = this.dateTimeList.length
+          if (next < len && len > 0) {
+            this.selectDate(this.dateTimeList[next].date, next)
+          }
+        }
+        if (scrollVal > 0) {
+          const prev = this.selectedDateIndex - 1
+          if (prev >= 0) {
+            this.selectDate(this.dateTimeList[prev].date, prev)
+          }
+        }
+      }
+    },
+    scrollToSelectTimeMouse(e){
+      const selectedTimeIndex = this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime) > -1 ? this.dateTimeList[this.selectedDateIndex].time.findIndex(x => x === this.selectedTime) : 0
+      const scrollVal = e.wheelDeltaY
+      let isWheel = false
+      if (Math.abs(scrollVal) >= 120) {
+        isWheel = true
+      }
+      if (isWheel) {
+        e.preventDefault()
+        if (scrollVal < 0) {
+          const next = selectedTimeIndex + 1
+          const len = this.dateTimeList[this.selectedDateIndex].time.length
+          if (next < len && len > 0) {
+            this.selectTime(this.dateTimeList[this.selectedDateIndex].time[next])
+          }
+        }
+        if (scrollVal > 0) {
+          const prev = selectedTimeIndex - 1
+          if (prev >= 0) {
+            this.selectTime(this.dateTimeList[this.selectedDateIndex].time[prev])
+          }
+        }
+      }
     },
     scrollToSelectDate(){
       // console.log(this.selectPosTop, this.selectPosBottom);
@@ -348,10 +409,18 @@ export default {
 .schedule-item.active{
   background-color: var(--bg-active);
 }
+.schedule-item.closed.active{
+  background-color: #dedede;
+}
 .schedule-item.active p{
   color: black;
   font-weight: 600;
 }
+.schedule-item.closed.active p{
+  color: #848484;
+  font-weight: 400;
+}
+
 .schedule-item.date.active{
   border-radius: 5px 0 0 5px;
 }

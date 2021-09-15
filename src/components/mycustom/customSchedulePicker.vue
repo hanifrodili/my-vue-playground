@@ -15,6 +15,7 @@ export default {
       timeInterval: 30,
       daysCount: 30,
       openingHour: ['09:00','20:30'],
+      daysOff: ['2021-09-16','2021-10-01','2021-10-02','2021-10-03']
     }
   })
 }
