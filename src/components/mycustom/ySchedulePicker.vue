@@ -1,8 +1,9 @@
 <template lang="pug">
   .y-schedule-picker.mx-auto(:style="cssProps")
+    div.active-box
     v-row.ma-0(style="height:100%;")
       v-col.pa-0.schedule-container(cols="8")
-        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)"  :class="{ active: selectedDateIndex === index , 'closed': item.date === null}" :id="'date'+index")
+        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)"  :class="{ active: selectedDateIndex === index }" :id="'date'+index")
          p {{convertDate(item.date)}}
       v-col.pa-0.schedule-container(cols="4")
         div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)"  :class="{ active: selectedTime === item }" :id="'time'+index" v-if="item" )
@@ -301,6 +302,11 @@ export default {
           relativePos = relativePos + (relativePos/2)
           if (relativePos > this.selectPosTop && relativePos < this.selectPosBottom) {
             date.classList.add("active")
+            if (!this.dateTimeList[index].date) {
+              document.getElementsByClassName('active-box')[0].classList.add("closed")
+            }else{
+              document.getElementsByClassName('active-box')[0].classList.remove("closed")
+            }
             if (!this.isClicked) { 
               this.selectDate(this.dateTimeList[index].date, index)
             }
@@ -349,6 +355,20 @@ export default {
   max-width: var(--el-width);
   height: var(--el-height);
   transition: padding .3s ease-in-out;
+  position: relative;
+}
+.y-schedule-picker .active-box{
+  width: calc(100% - 16px);
+  /* margin: 0 -8px; */
+  /* padding: 0 8px; */
+  height: 35px;
+  background-color: var(--bg-active);
+  border-radius: 5px;
+  position: absolute;
+  top: 58px;
+}
+.y-schedule-picker .active-box.closed{
+  background-color: #dedede;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .schedule-container::-webkit-scrollbar {
@@ -407,7 +427,7 @@ export default {
   /* color: rgb(59, 59, 59); */
 }
 .schedule-item.active{
-  background-color: var(--bg-active);
+  /* background-color: var(--bg-active); */
 }
 .schedule-item.closed.active{
   background-color: #dedede;
