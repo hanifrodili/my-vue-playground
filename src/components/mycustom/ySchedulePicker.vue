@@ -308,6 +308,7 @@ export default {
               document.getElementsByClassName('active-box')[0].classList.remove("closed")
             }
             if (!this.isClicked) { 
+              this.vibrate()
               this.selectDate(this.dateTimeList[index].date, index)
             }
           }else{
@@ -334,6 +335,7 @@ export default {
             // console.log(this.dateTimeList[index].date);
             if (!this.isClicked) {
               this.selectTime(this.dateTimeList[this.selectedDateIndex].time[index])
+              this.vibrate()
             }
             // console.log(date);
             // console.log(this.selectPosTop,relativePos,this.selectPosBottom);
@@ -344,6 +346,12 @@ export default {
       }else{
         this.autoScroll = false
       }
+    },
+    vibrate(){
+      navigator.vibrate(100)
+      setTimeout(() => {
+        navigator.vibrate(0)
+      }, 50);
     }
   }
 }
