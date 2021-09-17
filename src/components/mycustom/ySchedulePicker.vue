@@ -347,7 +347,7 @@ export default {
       }
     },
     vibrate(){
-      // navigator.vibrate(10)
+      navigator.vibrate(10)
       // setTimeout(() => {
       //   navigator.vibrate(0)
       // }, 50);
