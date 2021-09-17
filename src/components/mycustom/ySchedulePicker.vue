@@ -383,6 +383,7 @@ export default {
   border-radius: 5px;
   position: absolute;
   top: 58px;
+  transition: background .3s ease-in-out;
 }
 .y-schedule-picker .active-box.closed{
   background-color: #dedede;
