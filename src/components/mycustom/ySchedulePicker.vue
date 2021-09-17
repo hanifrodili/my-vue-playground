@@ -1,12 +1,12 @@
 <template lang="pug">
-  .y-schedule-picker.mx-auto(:style="cssProps")
+  .y-schedule-picker.mx-auto(:style="cssProps" :class="{ 'theme--light': !darkTheme, 'theme--dark': darkTheme }")
     div.active-box
     v-row.ma-0(style="height:100%;")
       v-col.pa-0.schedule-container(cols="8")
-        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)"  :class="{ active: selectedDateIndex === index }" :id="'date'+index")
+        div.text-left.schedule-item.date(v-for="(item,index) in dateTimeList" :key="index" @click="selectDate(item.date,index)"  :class="{ active: selectedDateIndex === index, 'dark': dark, 'light': light }" :id="'date'+index")
          p {{convertDate(item.date)}}
       v-col.pa-0.schedule-container(cols="4")
-        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)"  :class="{ active: selectedTime === item }" :id="'time'+index" v-if="item" )
+        div.text-right.schedule-item.time(v-for="(item,index) in dateTimeList[selectedDateIndex].time" :key="index" @click="selectTime(item)"  :class="{ active: selectedTime === item, 'dark': dark, 'light': light }" :id="'time'+index" v-if="item" )
           p {{covert24To12(item)}}
 </template>
 <script>
@@ -31,6 +31,14 @@ export default {
     bgActive: {
       type: String,
       default: '#dedede'
+    },
+    light: {
+      type: Boolean,
+      default: false
+    },
+    dark: {
+      type: Boolean,
+      default: false
     },
     params: {
       type: Object,
@@ -64,6 +72,7 @@ export default {
     // this.selectPosTop = itemTop
     this.selectPosTop = itemTop + (container.offsetHeight/2) - (35/2)
     this.selectPosBottom = itemTop + (container.offsetHeight/2) + (35/2)
+    this.darkTheme = this.$vuetify.theme.dark ? true : false
   },
   data: () => ({
     dateTimeList: [{date: '',time:['']}],
@@ -73,7 +82,8 @@ export default {
     selectPosTop: 0,
     selectPosBottom: 0,
     autoScroll: false,
-    isClicked: false
+    isClicked: false,
+    darkTheme: false
   }),
   methods:{
     addLeadingZero(str,count){
@@ -434,15 +444,21 @@ export default {
   /* color: rgb(59, 59, 59); */
   transition: font .2s ease-in-out;
 }
-.schedule-item.active{
-  /* background-color: var(--bg-active); */
+/* .schedule-item.active{
+  background-color: var(--bg-active);
 }
 .schedule-item.closed.active{
   background-color: #dedede;
-}
+} */
 .schedule-item.active p{
   color: black;
   font-weight: 600;
+}
+.schedule-item.active.light p{
+  color: black;
+}
+.schedule-item.active.dark p{
+  color: white;
 }
 .schedule-item.closed.active p{
   color: #848484;

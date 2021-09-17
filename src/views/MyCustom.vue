@@ -8,7 +8,7 @@
     div.my-9
     label Schedule Picker
     div
-      v-btn.btn.warning.mb-2.px-2.py-1(v-if="isVibrateEnabled"  @click="showAlert" style="font-size:10px; height: fit-content") Click here before scroll ;)
+      v-btn.btn.warning.mb-2.px-2.py-1(v-if="isVibrateEnabled" @click="showAlert" style="font-size:10px; height: fit-content") Click here before scroll ;)
     custom-schedule-picker.py-2.rounded-lg.elevation-2
 </template>
 

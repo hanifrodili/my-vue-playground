@@ -1,6 +1,6 @@
 <template lang="pug">
   .my-schedule-picker
-    y-schedule-picker.mb-2(v-model="dateTime" :params='params' bg-active='#e6edff' width="100%")
+    y-schedule-picker.mb-2(v-model="dateTime" :params='params' dark bg-active='#6690ff' width="100%")
     p.text-center {{dateTime ? dateTime: 'Not Selected'}}
 </template>
 <script>
