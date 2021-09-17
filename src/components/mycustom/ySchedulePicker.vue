@@ -64,7 +64,6 @@ export default {
     // this.selectPosTop = itemTop
     this.selectPosTop = itemTop + (container.offsetHeight/2) - (35/2)
     this.selectPosBottom = itemTop + (container.offsetHeight/2) + (35/2)
-    
   },
   data: () => ({
     dateTimeList: [{date: '',time:['']}],
@@ -348,10 +347,10 @@ export default {
       }
     },
     vibrate(){
-      navigator.vibrate(100)
-      setTimeout(() => {
-        navigator.vibrate(0)
-      }, 50);
+      // navigator.vibrate(10)
+      // setTimeout(() => {
+      //   navigator.vibrate(0)
+      // }, 50);
     }
   }
 }
@@ -433,6 +432,7 @@ export default {
   user-select: none;
   font-weight: 400;
   /* color: rgb(59, 59, 59); */
+  transition: font .2s ease-in-out;
 }
 .schedule-item.active{
   /* background-color: var(--bg-active); */

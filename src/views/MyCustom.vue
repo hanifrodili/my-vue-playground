@@ -7,7 +7,8 @@
     custom-date-picker.pa-2.rounded-lg.elevation-2
     div.my-9
     label Schedule Picker
-    v-btn.btn.warning.mb-2( @click="showAlert" style="font-size:10px") Click here before scroll ;)
+    div
+      v-btn.btn.warning.mb-2.px-2.py-1(v-if="isVibrateEnabled"  @click="showAlert" style="font-size:10px; height: fit-content") Click here before scroll ;)
     custom-schedule-picker.py-2.rounded-lg.elevation-2
 </template>
 
@@ -18,9 +19,13 @@ import CustomSchedulePicker from '@/components/mycustom/customSchedulePicker.vue
 export default {
   name: 'MyCustom',
   data: () => ({
-    testValue: ''
+    testValue: '',
+    isVibrateEnabled: false,
   }),
   components: { CustomTextField, CustomDatePicker, CustomSchedulePicker },
+  mounted() {
+    this.isVibrateEnabled = navigator.vibrate
+  },
   methods:{
     showAlert(){
       alert('Reason is to detect user interaction before browser allowing vibration. TQ ;)')
