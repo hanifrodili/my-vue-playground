@@ -4,7 +4,7 @@
       v-row
         v-col.col.pt-5(cols="12" md="5")
           .media-container-1.ratio-1x1
-            img(src='https://via.placeholder.com/600x600?text=Video Anda' width='100%' alt='')
+            img(src='https://via.placeholder.com/800x600?text=Gambar Anda' height='100%' alt='')
         v-col.col.pt-4(cols="12" md="7")
           .section-heading-text.text-black.mt-lg-5 Make virtual interactions more human
           .section-body-text.text-black
@@ -13,7 +13,7 @@
       v-row.reverse
         v-col.col.pt-5(cols="12" md="5")
           .media-container-1.ratio-1x1
-            img(src='https://via.placeholder.com/600x600?text=Video Anda' width='100%' alt='')
+            img(src='https://via.placeholder.com/800x600?text=Gambar Anda' height='100%' alt='')
         v-col.col.pt-4(cols="12" md="7")
           .section-heading-text.text-black.mt-lg-5 Make virtual interactions more human
           .section-body-text.text-black
@@ -22,7 +22,7 @@
       v-row
         v-col.col.pt-5(cols="12" md="5")
           .media-container-1.ratio-1x1
-            img(src='https://via.placeholder.com/600x600?text=Video Anda' width="100%"  alt='')
+            img(src='https://via.placeholder.com/800x600?text=Gambar Anda' height="100%"  alt='')
         v-col.col.pt-4(cols="12" md="7")
           .section-heading-text.text-black.mt-lg-5 Make virtual interactions more human
           .section-body-text.text-black

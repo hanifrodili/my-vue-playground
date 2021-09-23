@@ -13,7 +13,9 @@
           button.btn.bg-primary.btn-1.light Get Started
         v-col.col(cols="12" md="6")
           .media-container-1.ratio-6x4
-            img(src='https://via.placeholder.com/600x400?text=Video Anda' width='100%' alt='')
+            //- img(src='https://via.placeholder.com/600x400?text=Video Anda' width='100%' alt='')
+            video(height="100%" loop autoplay muted)
+              source(src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4")
 </template>
 <script>
 import Typed from '@/assets/js/typed.min.js'

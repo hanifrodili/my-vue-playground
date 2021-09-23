@@ -1,5 +1,5 @@
 <template lang="pug">
-  .gather(style="margin-top:56px")
+  .gather
     navbar
     top-section
     brand-banner
@@ -7,6 +7,7 @@
     testimoni-section
     solutions-section
     cta-banner
+    my-footer
 </template>
 <script>
 import Navbar from '@/components/landingpage/gather/Navbar.vue'
@@ -16,6 +17,7 @@ import FeaturesSection from '@/components/landingpage/gather/FeaturesSection.vue
 import TestimoniSection from '@/components/landingpage/gather/TestimoniSection.vue'
 import SolutionsSection from '@/components/landingpage/gather/SolutionsSection.vue'
 import CtaBanner from '@/components/landingpage/gather/CtaBanner.vue'
+import MyFooter from '@/components/landingpage/gather/Footer.vue'
 export default {
   name: "Gather",
   components: {
@@ -25,7 +27,8 @@ export default {
     FeaturesSection,
     TestimoniSection,
     SolutionsSection,
-    CtaBanner
+    CtaBanner,
+    MyFooter
   }
 }
 </script>
