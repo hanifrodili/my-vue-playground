@@ -9,6 +9,7 @@
     "deploy-firebase": "yarn build && firebase deploy"
   },
   "dependencies": {
+    "@builder.io/vue": "^0.1.11",
     "@v-craft/core": "^0.2.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.3",

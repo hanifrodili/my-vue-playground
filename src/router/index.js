@@ -6,6 +6,7 @@ import MyCustom from '../views/MyCustom.vue'
 import BuilderHome from '../views/YezzaBuilder/index.vue'
 import YezzaBuilderPreview from '../views/YezzaBuilder/preview/_id.vue'
 import Builder from '../views/YezzaBuilder/builder/_id.vue'
+import GatherPage from '../views/Page/Gather/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,12 @@ const routes = [
     // component: Grapesjs
   },
   {
+    path: '/builderio',
+    name: 'BuilderIO',
+    component: () => import(/* webpackChunkName: "about" */ '../views/BuilderIO.vue'),
+    // component: Grapesjs
+  },
+  {
     path: '/vcraftjs',
     name: 'VCraftjs',
     component: () => import(/* webpackChunkName: "about" */ '../views/VCraftjs.vue')
@@ -40,6 +47,11 @@ const routes = [
     path: '/mycustom',
     name: 'MyCustom',
     component: MyCustom
+  },
+  {
+    path: '/page/gather',
+    name: 'GatherPage',
+    component: GatherPage
   },
   {
     path: '/yezzabuilder',
