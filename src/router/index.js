@@ -7,6 +7,7 @@ import BuilderHome from '../views/YezzaBuilder/index.vue'
 import YezzaBuilderPreview from '../views/YezzaBuilder/preview/_id.vue'
 import Builder from '../views/YezzaBuilder/builder/_id.vue'
 import GatherPage from '../views/Page/Gather/Index.vue'
+import RateCard from '../views/CreatorComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -67,6 +68,11 @@ const routes = [
     path: '/yezzabuilder/builder/:id',
     name: 'Builder',
     component: Builder
+  },
+  {
+    path: '/ratecard',
+    name: 'Rate Card',
+    component: RateCard
   }
 ]
 
