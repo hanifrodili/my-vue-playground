@@ -106,6 +106,7 @@ export default {
   opacity: 1;
   margin-top:-4px;
   line-height: 20px;
+  transition: opacity .2s ease-in-out, line-height .2s ease-in-out, margin .2s ease-in-out;
 }
 
 .product-chooose-btn{
