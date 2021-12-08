@@ -64,7 +64,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: height .2s ease-in-out;
+  transition: height 0.2s ease-in-out;
   /* justify-content: space-between; */
 }
 
@@ -98,7 +98,7 @@ export default {
   opacity: 0;
   margin-top:0;
   margin-left:34px;
-  transition: opacity .2s ease-in-out, line-height .2s ease-in-out, margin .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, line-height 0.2s ease-in-out, margin 0.2s ease-in-out;
 }
 
 .product-card.clicked .product-text-desc{
@@ -106,7 +106,7 @@ export default {
   opacity: 1;
   margin-top:-4px;
   line-height: 20px;
-  transition: opacity .2s ease-in-out, line-height .2s ease-in-out, margin .2s ease-in-out;
+  /* transition: opacity 0.2s ease-in-out, line-height 0.2s ease-in-out, margin 0.2s ease-in-out; */
 }
 
 .product-chooose-btn{
@@ -127,7 +127,7 @@ export default {
   text-align: center;
   text-transform: capitalize;
   width: 98px;
-  transition: opacity .2s ease-in-out, margin .2s ease-in-out, font-size .2s ease-in-out, height .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out, margin 0.2s ease-in-out, font-size 0.2s ease-in-out, height 0.2s ease-in-out;
 }
 
 .product-card.clicked .product-chooose-btn{
