@@ -85,6 +85,10 @@ export default {
   line-height: 20px !important;
 }
 
+.product-text-title:hover{
+  cursor: pointer;
+}
+
 /* .product-text-title:nth-of-type(2){
   margin-left: auto;
 } */
@@ -93,19 +97,21 @@ export default {
   color: #000;
   font-weight: 400 !important;
   font-size: 13px !important;
-  line-height: 0px;
+  line-height: 20px;
   /* display: none; */
   opacity: 0;
   margin-top:0;
   margin-left:34px;
-  transition: opacity 0.2s ease-in-out, line-height 0.2s ease-in-out, margin 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out,
+    /* line-height 0.2s ease-in-out, */
+    margin 0.2s ease-in-out;
 }
 
 .product-card.clicked .product-text-desc{
   /* display: unset; */
   opacity: 1;
   margin-top:-4px;
-  line-height: 20px;
+  /* line-height: 20px; */
   /* transition: opacity 0.2s ease-in-out, line-height 0.2s ease-in-out, margin 0.2s ease-in-out; */
 }
 
