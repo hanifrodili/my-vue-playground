@@ -93,7 +93,7 @@ export default {
   color: #000;
   font-weight: 400 !important;
   font-size: 13px !important;
-  line-height: 0px !important;
+  line-height: 0px;
   /* display: none; */
   opacity: 0;
   margin-top:0;
@@ -105,7 +105,7 @@ export default {
   /* display: unset; */
   opacity: 1;
   margin-top:-4px;
-  line-height: 20px !important;
+  line-height: 20px;
 }
 
 .product-chooose-btn{
