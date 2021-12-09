@@ -14,21 +14,21 @@ export default {
   data: ()=>({
     products:[
       {
-        title: 'Product Title 1',
+        title: 'Instagram Story',
         currency: 'RM',
-        rate: 3000,
+        rate: 900,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna, consectetur elementum nisi. Integer et arcu ante. Aliquam erat volutpat.'
       },
       {
-        title: 'Product Title 2',
-        currency: 'SGD',
-        rate: 1000,
+        title: 'Instagram Feed',
+        currency: 'RM',
+        rate: 700,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna.'
       },
       {
-        title: 'Product Title 3',
-        currency: 'Rp',
-        rate: 10000000,
+        title: 'Instagram Video',
+        currency: 'RM',
+        rate: 1000,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna, consectetur elementum nisi. Integer et arcu ante. Aliquam erat volutpat. Donec gravida molestie mauris, vitae placerat libero pharetra in. Ut malesuada nibh ante, ac scelerisque lorem elementum in.'
       }
     ]
