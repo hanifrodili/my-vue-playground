@@ -1,14 +1,16 @@
 <template lang="pug">
 .creator-component
-  product-card.mb-2(v-for="(product, index) in products" :key="index" :productData="product" :productIndex="index")
+  //- product-card.mb-2(v-for="(product, index) in products" :key="index" :productData="product" :productIndex="index")
+  product-card-2(:products="products")
 </template>
 
 <script>
-import ProductCard from '@/components/CreatorComponents/ProductCard.vue'; 
+import ProductCard from '@/components/CreatorComponents/ProductCard.vue';
+import ProductCard2 from '@/components/CreatorComponents/ProductCardV2.vue';
 
 export default {
   name: 'CreatorComponent',
-  components: { ProductCard },
+  components: { ProductCard, ProductCard2 },
   data: ()=>({
     products:[
       {
