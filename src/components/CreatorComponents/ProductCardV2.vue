@@ -79,7 +79,7 @@ export default {
   background-color: #fff;
   border: 1px solid #dadada;
   border-radius: 10px !important;
-  padding: 16px 20px 16px 13px;
+  padding: 15px 20px 15px 13px;
 }
 
 .product-icon{
