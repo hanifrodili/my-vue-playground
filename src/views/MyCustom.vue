@@ -52,7 +52,7 @@ export default {
       {
         product_id: 2,
         medium: 'tiktok',
-        title: 'Tiktok video created by me',
+        title: 'Tiktok video created by me with signature move',
         currency: 'usd',
         rate: 1000,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna, consectetur elementum nisi. Integer et arcu ante. Aliquam erat volutpat. Donec gravida molestie mauris, vitae placerat libero pharetra in. Ut malesuada nibh ante, ac scelerisque lorem elementum in.'
