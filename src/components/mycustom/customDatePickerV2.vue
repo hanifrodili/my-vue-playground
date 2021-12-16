@@ -75,7 +75,7 @@ export default {
 
   .v-date-picker-header > button[aria-label="Previous month"],
   .v-date-picker-header > button[aria-label="Previous year"]{
-    right: 30px;
+    right: 40px;
     color: rgba(62,62,62,.5) !important;
   }
 
@@ -141,7 +141,12 @@ export default {
   .v-date-picker-table__current{
     border: none; /*change current date color border*/
     color: white; /*change current date color text*/
-    background-color: transparent /*change current date color bg*/
+    background-color: transparent ;/*change current date color bg*/
+    .v-btn__content {
+      background-color: transparent; /*change active/selected date color bg*/
+      color: #6153FF;
+      font-weight: 600 !important;
+    }
   }
   .v-date-picker-table .v-btn.v-btn--disabled {
     color:#c1c1c1 !important; /*change disabled date color text*/
@@ -165,9 +170,7 @@ export default {
 
   .v-date-picker-table .v-btn.v-btn--active .v-btn__content {
     background-color: #6153FF; /*change active/selected date color bg*/
-  }
-  .v-date-picker-table__current .v-btn__content {
-    background-color: #333; /*change active/selected date color bg*/
+    color: #fff;
   }
 
   .v-btn.v-btn--active .v-date-picker-table__events > div {
