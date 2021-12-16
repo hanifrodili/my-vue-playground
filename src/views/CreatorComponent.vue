@@ -14,31 +14,35 @@ export default {
   data: ()=>({
     products:[
       {
+        product_id: 0,
         medium: 'instagram',
         title: 'Instagram Story',
-        currency: 'RM',
-        rate: 900,
+        currency: 'usd',
+        rate: 300,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna, consectetur elementum nisi. Integer et arcu ante. Aliquam erat volutpat.'
       },
       {
+        product_id: 1,
         medium: 'twitter',
         title: 'Tweet with image',
-        currency: 'RM',
+        currency: 'myr',
         rate: 500,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna.'
       },
       {
+        product_id: 2,
         medium: 'tiktok',
-        title: 'Tiktok video create by me',
-        currency: 'RM',
+        title: 'Tiktok video created by me',
+        currency: 'usd',
         rate: 1000,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna, consectetur elementum nisi. Integer et arcu ante. Aliquam erat volutpat. Donec gravida molestie mauris, vitae placerat libero pharetra in. Ut malesuada nibh ante, ac scelerisque lorem elementum in.'
       },
       {
+        product_id: 3,
         medium: 'youtube',
-        title: 'Video create by you',
-        currency: 'RM',
-        rate: 500,
+        title: 'Video created by you',
+        currency: 'myr',
+        rate: 99999,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis scelerisque magna, consectetur elementum nisi. Integer et arcu ante. Aliquam erat volutpat. Donec gravida molestie mauris, vitae placerat libero pharetra in. Ut malesuada nibh ante, ac scelerisque lorem elementum in.'
       }
     ]
@@ -51,11 +55,6 @@ export default {
 .creator-component{
   background-color: #eeeeee;
   font-family: 'Inter', sans-serif;
-  padding: 50px 20px;
-}
-.product-card{
-  max-width: 345px;
-  width: 100%;
-  margin: auto;
+  padding: 50px 0px;
 }
 </style>

@@ -1,15 +1,15 @@
 <template lang="pug">
   .my-date-picker
-    label.pa-4 Range
-    v-date-picker.mb-1(v-model="dates"  header-color="basic100" color="info400" style="width:100%" :events="arrayEvents" event-color="#848484" range)
-    p.text-center {{dates[0]}} → {{dates[1]}}
+    label.pa-4 Multiple
+    v-date-picker.mb-1(v-model="dates"  header-color="basic100" color="info400" style="width:100%" :events="arrayEvents" event-color="#848484" show-adjacent-months multiple )
+    p.text-center(v-for="(date,index) in dates" :key="index") {{date}}
 </template>
 <script>
 export default {
   name: 'MyDatePicker',
   data: () => ({
     arrayEvents: null,
-    dates: ['2022-01-10', '2021-12-20'],
+    dates: ['2021-12-30', '2021-12-20'],
   }),
   computed: {
     dateRangeText () {
@@ -30,8 +30,7 @@ export default {
 @import url(`../../assets/materialdesignicons-webfont.ttf`);
 
 .my-date-picker{
-  max-width: 327px;
-  width: 100%;
+  width: fit-content;
   margin: auto;
   padding: 10px 0;
 }
@@ -64,7 +63,7 @@ export default {
   .v-date-picker-header{ /*month and arrow */
     /* border-bottom: 1px solid rgb(244,244,244);
     border-top: 1px solid rgb(244,244,244); */
-    height: 20px;
+    height: 40px;
   }
 
   .v-date-picker-header > button{
@@ -101,20 +100,36 @@ export default {
     margin-left: 14px;
     color: rgba(62,62,62,.5);
   }
-  .v-date-picker-table th {
-    font-size: 15px;
-    color: #19181A !important; /*change days name color text*/
-    height: 44px;
-    border-bottom: none;
-    /* border-bottom: 1px solid rgb(244,244,244); */
-    border-top: none;
-    /* border-top: 1px solid rgb(244,244,244); */
-  }
-
-  .v-date-picker-table--date {
+  .v-date-picker-table{
+    width: 327px;
     height: 290px;
     padding: 0;
+    table{
+      border-spacing: 0;
+    }
+    th {
+      font-size: 13px;
+      line-height: 24px;
+      color: #19181A !important; /*change days name color text*/
+      height: 44px;
+      border-bottom: none;
+      /* border-bottom: 1px solid rgb(244,244,244); */
+      border-top: none;
+      /* border-top: 1px solid rgb(244,244,244); */
+    }
+    td{
+      border-bottom: 1px solid #dadada;
+      height: 47px;
+    }
+    tr:last-of-type td{
+      border: none;
+    }
   }
+
+  // .v-date-picker-table--date {
+  //   height: 343px;
+  //   padding: 0;
+  // }
 
   .v-date-picker-table .v-btn {
     height: 40px;
@@ -124,25 +139,43 @@ export default {
     border-radius: 10px !important;
   }
   .v-date-picker-table__current{
-    border: 2px solid #333; /*change current date color border*/
+    border: none; /*change current date color border*/
     color: white; /*change current date color text*/
-    background-color: #333; /*change current date color bg*/
+    background-color: transparent /*change current date color bg*/
   }
   .v-date-picker-table .v-btn.v-btn--disabled {
-    color:rgba(143, 155, 179, 1) !important; /*change disabled date color text*/
+    color:#c1c1c1 !important; /*change disabled date color text*/
   }
 
   .v-date-picker-table .v-btn.v-btn--active {
-    background-color: #6153FF; /*change active/selected date color bg*/
+    background-color: transparent; 
     color: #fff;
   }
 
+  .v-date-picker-table .v-btn .v-btn__content {
+    font-size: 13px;
+    line-height: 24px;
+    font-weight: 400;
+    flex: unset;
+    height: 32px;
+    width: 32px;
+    border-radius: 32px;
+    margin-top: -13px;
+  }
+
+  .v-date-picker-table .v-btn.v-btn--active .v-btn__content {
+    background-color: #6153FF; /*change active/selected date color bg*/
+  }
+  .v-date-picker-table__current .v-btn__content {
+    background-color: #333; /*change active/selected date color bg*/
+  }
+
   .v-btn.v-btn--active .v-date-picker-table__events > div {
-    background-color: #fff !important;
+    // background-color: #fff !important;
   }
 
   .v-date-picker-table--date .v-date-picker-table__events{
-    bottom: 12px;
+    bottom: 7px;
   }
 
   .v-date-picker-table__events > div{
