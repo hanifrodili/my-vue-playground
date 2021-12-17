@@ -1,7 +1,7 @@
 <template lang="pug">
   .my-date-picker
     label.pa-4 Multiple
-    v-date-picker.mb-1(v-model="dates"  header-color="basic100" color="info400" style="width:100%" :events="arrayEvents" event-color="#848484" show-adjacent-months multiple )
+    v-date-picker.mb-1(v-model="dates"  header-color="basic100" color="info400" style="width:100%" :events="arrayEvents" event-color="#848484" :weekday-format="getDay" :first-day-of-week="1" show-adjacent-months multiple )
     p.text-center(v-for="(date,index) in dates" :key="index") {{date}}
 </template>
 <script>
@@ -23,7 +23,26 @@ export default {
         d.setDate(day)
         return d.toISOString().substr(0, 10)
       })
+      // this.changeDaysText()
+      // setTimeout(() => {
+      //   this.changeDaysText()
+      // }, 500);
+  },
+  methods: {
+    changeDaysText() {
+      const tableDateDay = document.getElementsByClassName('v-date-picker-table--date')[0].children[0].children[0].children[0].children
+      tableDateDay[0].innerText = "Su"
+      console.log(tableDateDay)
+      setTimeout(() => {
+        console.log(tableDateDay)
+      }, 2000);
     },
+    getDay(date) {
+      const daysOfWeek = ['Su','Mo','Tu','We','Th','Fri','Sa']
+      let i = new Date(date).getDay(date)
+      return daysOfWeek[i]
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -125,6 +144,11 @@ export default {
       border: none;
     }
   }
+  .v-date-picker-table.v-date-picker-table--month{
+    td{
+      border-bottom: none !important;
+    }
+  }
 
   // .v-date-picker-table--date {
   //   height: 343px;
@@ -138,7 +162,19 @@ export default {
     font-weight: 600;
     border-radius: 10px !important;
   }
-  .v-date-picker-table__current{
+  .v-date-picker-table.v-date-picker-table--month .v-btn {
+    height: 37px;
+    width: 76px;
+    font-size: 16px !important;
+    line-height: 24px;
+    font-weight: 600;
+    border-radius: 10px !important;
+    text-transform: capitalize;
+  }
+  .v-date-picker-table.v-date-picker-table--month .v-btn:hover{
+    background-color: #f4f4f4;
+  }
+  .v-date-picker-table--date .v-date-picker-table__current{
     border: none; /*change current date color border*/
     color: white; /*change current date color text*/
     background-color: transparent ;/*change current date color bg*/
@@ -148,16 +184,21 @@ export default {
       font-weight: 600 !important;
     }
   }
-  .v-date-picker-table .v-btn.v-btn--disabled {
+  .v-date-picker-table--date.v-date-picker-table .v-btn.v-btn--disabled {
     color:#c1c1c1 !important; /*change disabled date color text*/
   }
 
-  .v-date-picker-table .v-btn.v-btn--active {
+  .v-date-picker-table--date.v-date-picker-table .v-btn.v-btn--active {
     background-color: transparent; 
     color: #fff;
   }
 
-  .v-date-picker-table .v-btn .v-btn__content {
+  .v-date-picker-table--month.v-date-picker-table .v-btn.v-btn--active {
+    background-color: #6153FF; 
+    color: #fff;
+  }
+
+  .v-date-picker-table--date.v-date-picker-table .v-btn .v-btn__content {
     font-size: 13px;
     line-height: 24px;
     font-weight: 400;
@@ -168,7 +209,7 @@ export default {
     margin-top: -13px;
   }
 
-  .v-date-picker-table .v-btn.v-btn--active .v-btn__content {
+  .v-date-picker-table--date.v-date-picker-table .v-btn.v-btn--active .v-btn__content {
     background-color: #6153FF; /*change active/selected date color bg*/
     color: #fff;
   }
@@ -177,11 +218,11 @@ export default {
     // background-color: #fff !important;
   }
 
-  .v-date-picker-table--date .v-date-picker-table__events{
+  .v-date-picker-table--date.v-date-picker-table--date .v-date-picker-table__events{
     bottom: 7px;
   }
 
-  .v-date-picker-table__events > div{
+  .v-date-picker-table--date .v-date-picker-table__events > div{
     width: 5px;
     height: 5px;
   }
@@ -197,6 +238,7 @@ export default {
   .v-date-picker-years {
     font-size: 15px;
     font-weight: 600;
+    width: 327px;
     height: 290px;
     list-style-type: none;
     overflow: auto;
