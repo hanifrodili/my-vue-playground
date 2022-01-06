@@ -14,6 +14,8 @@
     div.my-9
     label Rate Card
     product-card(:products="products")
+    hr.my-5
+    product-card-3(:products="products")
     div.my-9
     label Quantity Selector
     qty-picker
@@ -26,9 +28,21 @@ import CustomDatePicker2 from '@/components/mycustom/customDatePickerV2.vue'
 import CustomSchedulePicker from '@/components/mycustom/customSchedulePicker.vue'
 import ScrollTrigger from '@/components/mycustom/scrollTrigger.vue'
 import ProductCard from '@/components/CreatorComponents/ProductCardV2.vue';
+import ProductCard3 from '@/components/CreatorComponents/ProductCardV3.vue';
 import QtyPicker from '@/components/mycustom/qtyPicker.vue';
+
 export default {
   name: 'MyCustom',
+  components: { 
+    CustomTextField,
+    CustomDatePicker,
+    CustomDatePicker2,
+    CustomSchedulePicker,
+    ScrollTrigger,
+    ProductCard,
+    ProductCard3,
+    QtyPicker
+  },
   data: () => ({
     testValue: '',
     isVibrateEnabled: false,
@@ -67,15 +81,6 @@ export default {
       }
     ]
   }),
-  components: { 
-    CustomTextField,
-    CustomDatePicker,
-    CustomDatePicker2,
-    CustomSchedulePicker,
-    ScrollTrigger,
-    ProductCard,
-    QtyPicker
-  },
   mounted() {
     this.isVibrateEnabled = navigator.vibrate
   },

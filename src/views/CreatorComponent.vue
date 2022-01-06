@@ -2,15 +2,23 @@
 .creator-component
   //- product-card.mb-2(v-for="(product, index) in products" :key="index" :productData="product" :productIndex="index")
   product-card(:products="products")
+  product-card-3(:products="products")
+  hr
+  div.mx-auto.my-4(style="max-width: 345px")
+    v-row
+      v-col.pa-2(cols="6" v-for="n in 6" :key="n")
+        photo-card
 </template>
 
 <script>
 // import ProductCard from '@/components/CreatorComponents/ProductCard.vue';
 import ProductCard from '@/components/CreatorComponents/ProductCardV2.vue';
+import ProductCard3 from '@/components/CreatorComponents/ProductCardV3.vue';
+import PhotoCard from '@/components/CreatorComponents/PhotoCard.vue';
 
 export default {
   name: 'CreatorComponent',
-  components: { ProductCard },
+  components: { ProductCard, ProductCard3, PhotoCard },
   data: ()=>({
     products:[
       {
