@@ -23,7 +23,7 @@
         v-row.ma-0.my-row(style="")
           p.mb-0.product-text-desc {{product.description}}
         v-row.ma-0.my-row()
-          //- .qty-picker
+          .qty-picker
             v-row(style="height:100%")
               eva-icon.d-flex.align-self-center.qty-btn(name="minus-circle" height="20px" width="20px" :fill="selected[index].qty > 0 ? '#231F20' : '#C1C1C1'" @click="changeValue('dec', index)")
               div
