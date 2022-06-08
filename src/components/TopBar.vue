@@ -22,10 +22,6 @@ v-app-bar(app color='#2f6281' dark)
             v-list-item.py-3()
               v-list-item-title
                 | GrapesJS
-          router-link(to="/vcraftjs" )
-            v-list-item.py-3()
-              v-list-item-title
-                | VCraftJS
           router-link(to="/mypagebuilder" )
             v-list-item.py-3()
               v-list-item-title
@@ -55,10 +51,6 @@ v-app-bar(app color='#2f6281' dark)
               v-list-item.pa-3()
                 v-list-item-title
                     | GrapesJS
-            router-link(to="/vcraftjs" )
-              v-list-item.pa-3()
-                v-list-item-title
-                    | VCraftJS
             router-link(to="/mypagebuilder" )
               v-list-item.pa-3()
                 v-list-item-title

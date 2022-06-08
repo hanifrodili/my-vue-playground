@@ -1,7 +1,7 @@
 <template lang="pug">
   v-app.main-font()
-    nav-bar(style="z-index:200" v-if="!(['MyPageBuilderPreview','GatherPage'].includes($route.name))")
-    v-main(:style="!(['MyPageBuilderPreview','GatherPage'].includes($route.name)) ? 'padding-top:56px' : ''")
+    nav-bar(style="z-index:200" v-if="!(['YezzaBuilderPreview','GatherPage'].includes($route.name))")
+    v-main(:style="!(['YezzaBuilderPreview','GatherPage'].includes($route.name)) ? 'padding-top:50px' : ''")
       router-view
 </template>
 

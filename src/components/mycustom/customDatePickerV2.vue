@@ -45,9 +45,15 @@ export default {
   }
 }
 </script>
+<style scoped>
+@font-face {
+  font-family: "Material Design Icons";
+  src: local("Material Design Icons"),
+   url(../../assets/materialdesignicons-webfont.ttf) format("truetype");
+}
+/* @import url('../../assets/materialdesignicons-webfont.ttf'); */
+</style>
 <style lang="scss" scoped>
-@import url(`../../assets/materialdesignicons-webfont.ttf`);
-
 .my-date-picker{
   width: fit-content;
   margin: auto;

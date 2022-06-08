@@ -3,12 +3,12 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import MyCustom from '../views/MyCustom.vue'
+import Grapesjs from '../views/Grapesjs.vue'
 import BuilderHome from '../views/MyPageBuilder/index.vue'
 import MyPageBuilderPreview from '../views/MyPageBuilder/preview/_id.vue'
 import Builder from '../views/MyPageBuilder/builder/_id.vue'
 import GatherPage from '../views/Page/Gather/Index.vue'
 import RateCard from '../views/CreatorComponent.vue'
-import Froala from '../views/Froala.vue'
 
 Vue.use(VueRouter)
 
@@ -30,20 +30,14 @@ const routes = [
   {
     path: '/grapesjs',
     name: 'Grapesjs',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Grapesjs.vue'),
-    // component: Grapesjs
+    // component: () => import(/* webpackChunkName: "about" */ '../views/Grapesjs.vue'),
+    component: Grapesjs
   },
   {
     path: '/builderio',
     name: 'BuilderIO',
     component: () => import(/* webpackChunkName: "about" */ '../views/BuilderIO.vue'),
     // component: Grapesjs
-  },
-  {
-    path: '/vcraftjs',
-    name: 'VCraftjs',
-    component: () => import(/* webpackChunkName: "about" */ '../views/VCraftjs.vue')
-    // component: VCraftjs
   },
   {
     path: '/mycustom',
@@ -74,11 +68,6 @@ const routes = [
     path: '/ratecard',
     name: 'Rate Card',
     component: RateCard
-  },
-  {
-    path: '/froala',
-    name: 'Froala',
-    component: Froala
   }
 ]
 
