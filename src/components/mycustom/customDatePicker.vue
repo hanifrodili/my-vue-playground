@@ -26,7 +26,12 @@ export default {
 }
 </script>
 <style scoped>
-@import url(`../../assets/materialdesignicons-webfont.ttf`);
+@font-face {
+  font-family: "Material Design Icons";
+  src: local("Material Design Icons"),
+   url(../../assets/materialdesignicons-webfont.ttf) format("truetype");
+}
+/* @import url('../../assets/materialdesignicons-webfont.ttf'); */
 
 ::v-deep .v-date-picker-title__year{
   display: none;

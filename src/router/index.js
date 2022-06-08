@@ -3,9 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import MyCustom from '../views/MyCustom.vue'
-import BuilderHome from '../views/YezzaBuilder/index.vue'
-import YezzaBuilderPreview from '../views/YezzaBuilder/preview/_id.vue'
-import Builder from '../views/YezzaBuilder/builder/_id.vue'
+import BuilderHome from '../views/MyPageBuilder/index.vue'
+import MyPageBuilderPreview from '../views/MyPageBuilder/preview/_id.vue'
+import Builder from '../views/MyPageBuilder/builder/_id.vue'
 import GatherPage from '../views/Page/Gather/Index.vue'
 
 Vue.use(VueRouter)
@@ -54,17 +54,17 @@ const routes = [
     component: GatherPage
   },
   {
-    path: '/yezzabuilder',
+    path: '/mypagebuilder',
     name: 'BuilderHome',
     component: BuilderHome
   },
   {
-    path: '/yezzabuilder/preview/:id',
-    name: 'YezzaBuilderPreview',
-    component: YezzaBuilderPreview
+    path: '/mypagebuilder/preview/:id',
+    name: 'MyPageBuilderPreview',
+    component: MyPageBuilderPreview
   },
   {
-    path: '/yezzabuilder/builder/:id',
+    path: '/mypagebuilder/builder/:id',
     name: 'Builder',
     component: Builder
   }

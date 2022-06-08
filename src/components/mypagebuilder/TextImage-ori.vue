@@ -53,7 +53,7 @@
                 v-expansion-panel-content.py-3
                   //- v-select.mb-2(v-model="userInput.layout.value" outlined dense :items="layoutList" item-value="id" item-text="label" hide-details="auto")
                   div(v-for="layout in layoutList" :key="layout.id" @click="changeLayout(layout.id)")
-                    v-img.mx-auto(:src="require(`@/components/yezzabuilder/img/${layout.img}`)" width="60%" :class="userInput.layout.value === layout.id ? 'layout-border__active' : 'layout-border'" )
+                    v-img.mx-auto(:src="require(`@/components/mypagebuilder/img/${layout.img}`)" width="60%" :class="userInput.layout.value === layout.id ? 'layout-border__active' : 'layout-border'" )
                     p.text-center {{layout.label}}
               v-expansion-panel(style="background-color:transparent")
                 v-expansion-panel-header Content
@@ -130,7 +130,7 @@ export default {
         value: '#FFFFFFFF'
       },
       image: {
-        value: require('@/components/yezzabuilder/img/img-b.jpg')
+        value: require('@/components/mypagebuilder/img/img-b.jpg')
       },
       blockPaddingTop: {
         value: 80

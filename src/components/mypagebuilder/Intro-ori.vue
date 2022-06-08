@@ -90,7 +90,7 @@ export default {
         value: '#FFFFFF'
       },
       bgImage: {
-        value: require('@/components/yezzabuilder/img/img-a.jpg')
+        value: require('@/components/mypagebuilder/img/img-a.jpg')
       },
       blockPaddingTop: {
         value: 150

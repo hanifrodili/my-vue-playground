@@ -1,29 +1,29 @@
 <template lang="pug">
-  .yezza-builder
-    menu-bar(@import="importData" :pageID="pageID" :pageData="userComponents" :pageTitle="pageTitle")
-    div(:style="$vuetify.breakpoint.width < 960 ? 'margin-top:46px' : 'margin-top:48px'")
-      template(v-for="(components, index) in userComponents")
-        component(:is="components.component" :configs="components.config" 
-        :editable="true" :key="components._uid" :blockID="components._uid" :reuseBlockID="components.reuseBlockID"
-        @removeBlock="removeBlock" @updateConfigs="updateConfigs" :blockIndex="index"
-        @moveUp="moveBlockUp" @moveDown="moveBlockDown")
-        v-row.ma-0
-          v-col.text-center(cols='12' style="padding: 0px; border: 1px solid rgba(76, 175, 80, .9);")
-            //- v-btn.mx-auto.addButton( @click="addBlock(index+1)" ) Test Add Block Here
-            add-dialog(:position="index" @addBlock="addBlock" :usedBlock="userComponents | removeDuplicateBlock"  @reuseBlock="reuseBlock")
-      v-row.ma-0(v-if="userComponents.length === 0" style="margin-top:90px !important")
-          v-col.text-center(cols='12')
-            //- v-btn.mx-auto.addButton( @click="addBlock(index+1)" ) Test Add Block Here
-            add-dialog(:position="-1" @addBlock="addBlock" :usedBlock="userComponents")
+.mypage-builder
+  menu-bar(@import="importData" :pageID="pageID" :pageData="userComponents" :pageTitle="pageTitle")
+  div(:style="$vuetify.breakpoint.width < 960 ? 'margin-top:46px' : 'margin-top:48px'")
+    template(v-for="(components, index) in userComponents")
+      component(:is="components.component" :configs="components.config" :key="components._uid"
+      :editable="true" :blockID="components._uid" :reuseBlockID="components.reuseBlockID"
+      @removeBlock="removeBlock" @updateConfigs="updateConfigs" :blockIndex="index"
+      @moveUp="moveBlockUp" @moveDown="moveBlockDown")
+      v-row.ma-0
+        v-col.text-center(cols='12' style="padding: 0px; border: 1px solid rgba(76, 175, 80, .9);")
+          //- v-btn.mx-auto.addButton( @click="addBlock(index+1)" ) Test Add Block Here
+          add-dialog(:position="index" @addBlock="addBlock" :usedBlock="userComponents | removeDuplicateBlock"  @reuseBlock="reuseBlock")
+    v-row.ma-0(v-if="userComponents.length === 0" style="margin-top:90px !important")
+        v-col.text-center(cols='12')
+          //- v-btn.mx-auto.addButton( @click="addBlock(index+1)" ) Test Add Block Here
+          add-dialog(:position="-1" @addBlock="addBlock" :usedBlock="userComponents")
 </template>
 <script>
-import YezzaBlocks from '@/components/yezzabuilder/blocks'
-import AddDialog from '@/components/yezzabuilder/builder/addBlockDialog.vue'
-import MenuBar from '@/components/yezzabuilder/builder/MenuBar.vue'
+import MyPageBlocks from '@/components/mypagebuilder/blocks'
+import AddDialog from '@/components/mypagebuilder/builder/addBlockDialog.vue'
+import MenuBar from '@/components/mypagebuilder/builder/MenuBar.vue'
 
 export default {
-  name: 'YezzaBuilder',
-  components: { AddDialog, MenuBar, ...YezzaBlocks },
+  name: 'MyPageBuilder',
+  components: { AddDialog, MenuBar, ...MyPageBlocks },
   data: ()=>({
     userPages:[],
     userComponents: [],
@@ -80,11 +80,11 @@ export default {
       let newBlock = ''
       const newBlockID = this.randID(10)
       const reuseBlockID = this.randNum(5)
-      const intro = `{ "_uid": "${newBlockID}", "component": "Intro", "name": "Intro", "reuseBlockID": "${reuseBlockID}", "config": { "title": { "value": "Tell people about what makes your site special." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000" }, "btnTextColor": { "value": "#FFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#FFFFFF" }, "bgColor": { "value": "#FFFFFF" }, "bgImage": { "value": "${require("@/components/yezzabuilder/blocks/img/img-a.jpg")}" }, "blockPaddingTop": { "value": 150 }, "blockPaddingBottom": { "value": 150 }, "bgParallax": { "value": "scroll" } } }`
+      const intro = `{ "_uid": "${newBlockID}", "component": "Intro", "name": "Intro", "reuseBlockID": "${reuseBlockID}", "config": { "title": { "value": "Tell people about what makes your site special." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000" }, "btnTextColor": { "value": "#FFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#FFFFFF" }, "bgColor": { "value": "#FFFFFF" }, "bgImage": { "value": "${require("@/components/mypagebuilder/blocks/img/img-a.jpg")}" }, "blockPaddingTop": { "value": 150 }, "blockPaddingBottom": { "value": 150 }, "bgParallax": { "value": "scroll" } } }`
 
       const textBlock = `{ "_uid": "${newBlockID}", "component": "TextBlock", "name": "Text", "reuseBlockID": "${reuseBlockID}", "config": { "title": { "value": "Your Text Goes Here." }, "desc": {"value": "Your Long Descriptions Goes Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit." }, "textColor": { "value": "#000000" }, "bgColor": { "value": "#FFFFFF" }, "blockPaddingTop": { "value": 80 }, "blockPaddingBottom": { "value": 80 } } }`
 
-      const textImage = `{ "_uid": "${newBlockID}", "component": "TextImage", "name": "Text & Image", "reuseBlockID": "${reuseBlockID}", "config":{ "layout": { "value": 1 }, "title": { "value": "Your Text Goes Here" }, "desc": { "value": "Your Long Descriptions Goes Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000FF" }, "btnTextColor": { "value": "#FFFFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#000000FF" }, "bgColor": { "value": "#FFFFFFFF" }, "image": { "value": "${require('@/components/yezzabuilder/blocks/img/img-b.jpg')}" }, "blockPaddingTop": { "value": 80 }, "blockPaddingBottom": { "value": 80 } } }`
+      const textImage = `{ "_uid": "${newBlockID}", "component": "TextImage", "name": "Text & Image", "reuseBlockID": "${reuseBlockID}", "config":{ "layout": { "value": 1 }, "title": { "value": "Your Text Goes Here" }, "desc": { "value": "Your Long Descriptions Goes Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000FF" }, "btnTextColor": { "value": "#FFFFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#000000FF" }, "bgColor": { "value": "#FFFFFFFF" }, "image": { "value": "${require('@/components/mypagebuilder/blocks/img/img-b.jpg')}" }, "blockPaddingTop": { "value": 80 }, "blockPaddingBottom": { "value": 80 } } }`
       switch (block) {
         case 0:
           newBlock = intro

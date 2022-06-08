@@ -1,57 +1,57 @@
 <template lang="pug">
-  .builder-home.px-5.py-10.mx-auto(style="max-width:1240px")
-    p.pa-0.mb-1 My Pages
-    v-row.ma-0
-      v-col.px-1.py-2(cols="6" md="3" sm="4" v-for="page in userPages" :key="page.id")
-        v-card( style="height:108px")
-          v-card-text.pa-2.my-auto
-            div
-              h3 {{page.title}}
-              p.mb-0(style="font-size:12px; line-height:15px")
-                i Last Update:
-                br
-                |{{page.lastUpdate}}
-          v-card-actions.pa-2
-            v-spacer
-            v-btn.mx-1(@click="dialogDelete=true" icon color="red" small)
-              v-icon mdi-trash-can
-            p.mb-0 |
-            router-link(:to="{ name: 'YezzaBuilderPreview', params: { id: page.id }}" target="_blank")
-              v-btn.mx-1(icon color="success" small)
-                v-icon mdi-eye-outline
-            router-link(:to="{ name: 'Builder', params: { id: page.id }}")
-              v-btn.mx-1(icon color="primary" small)
-                v-icon mdi-pencil
-          v-dialog(v-model="dialogDelete" scrollable persistent max-width="300px")
-            v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px);")
-              v-card-text.pa-4
-                v-container()
-                  p Confirm Delete?
-                  h3 This action can't be undo
-              v-card-actions
-                v-spacer
-                v-btn(outlined color="primary" @click="deletePage(page.id)") Yes
-                v-btn(color="primary" @click="dialogDelete=false") No
-      v-col.px-1.py-2(cols="6" md="3" sm="4")
-        v-card.new-card.elevation-0.d-flex(@click="dialogAdd=true, newPageID = `page-${randID(5)}`" style="height:108px")
-          v-card-text.text-center.ma-auto
-            div 
-              v-icon mdi-plus
-              p.mb-0(style="font-size:12px") Build New
-    v-dialog(v-model="dialogAdd" scrollable persistent max-width="500px")
-      v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px);")
-        v-card-title.justify-space-between
-          | Build New Page
-          v-btn(color="primary" fab x-small dark text @click="dialogAdd = false")
-            v-icon mdi-close
-        v-card-text.pa-4
-          v-container()
-            v-text-field(v-model="newPageID" label="Page ID" filled rounded hide-details="auto")
-            v-text-field.mt-3(v-model="newPageTitle" label="Page Title" filled rounded hide-details="auto")
-        v-card-actions
+.builder-home.px-5.py-10.mx-auto(style="max-width:1240px")
+  p.pa-0.mb-1 My Pages
+  v-row.ma-0
+    v-col.px-1.py-2(cols="6" md="3" sm="4" v-for="page in userPages" :key="page.id")
+      v-card( style="height:108px")
+        v-card-text.pa-2.my-auto
+          div
+            h3 {{page.title}}
+            p.mb-0(style="font-size:12px; line-height:15px")
+              i Last Update:
+              br
+              |{{page.lastUpdate}}
+        v-card-actions.pa-2
           v-spacer
-          v-btn(outlined @click="createNewPage") Create
-            
+          v-btn.mx-1(@click="dialogDelete=true" icon color="red" small)
+            v-icon mdi-trash-can
+          p.mb-0 |
+          router-link(:to="{ name: 'MyPageBuilderPreview', params: { id: page.id }}" target="_blank")
+            v-btn.mx-1(icon color="success" small)
+              v-icon mdi-eye-outline
+          router-link(:to="{ name: 'Builder', params: { id: page.id }}")
+            v-btn.mx-1(icon color="primary" small)
+              v-icon mdi-pencil
+        v-dialog(v-model="dialogDelete" scrollable persistent max-width="300px")
+          v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px);")
+            v-card-text.pa-4
+              v-container()
+                p Confirm Delete?
+                h3 This action can't be undo
+            v-card-actions
+              v-spacer
+              v-btn(outlined color="primary" @click="deletePage(page.id)") Yes
+              v-btn(color="primary" @click="dialogDelete=false") No
+    v-col.px-1.py-2(cols="6" md="3" sm="4")
+      v-card.new-card.elevation-0.d-flex(@click="dialogAdd=true, newPageID = `page-${randID(5)}`" style="height:108px")
+        v-card-text.text-center.ma-auto
+          div.mt-6
+            v-icon mdi-plus
+            p.mb-0(style="font-size:12px") Create
+  v-dialog(v-model="dialogAdd" scrollable persistent max-width="500px")
+    v-card(style="background-color:rgba(255,255,255,0.8); backdrop-filter: blur(4px);")
+      v-card-title.justify-space-between
+        | Build New Page
+        v-btn(color="primary" fab x-small dark text @click="dialogAdd = false")
+          v-icon mdi-close
+      v-card-text.pa-4
+        v-container()
+          v-text-field(v-model="newPageID" label="Page Slug" filled rounded hide-details="auto")
+          v-text-field.mt-3(v-model="newPageTitle" label="Page Title" filled rounded hide-details="auto")
+      v-card-actions
+        v-spacer
+        v-btn(outlined @click="createNewPage") Create
+          
 </template>
 
 <script>
@@ -103,7 +103,7 @@ export default {
       this.newPageID = ''
       this.newPageTitle = ''
       this.dialogAdd = false
-      this.$router.push(`/yezzabuilder/builder/${id}`)
+      this.$router.push(`/mypagebuilder/builder/${id}`)
     },
     deletePage(id){
       this.userPages = this.userPages.filter((x) => x.id !== id)

@@ -89,7 +89,7 @@
             
 </template>
 <script>
-import SpeedMenu from '@/components/yezzabuilder/builder/SpeedMenu.vue'
+import SpeedMenu from '@/components/mypagebuilder/builder/SpeedMenu.vue'
 export default {
   name: 'Intro',
   components: { SpeedMenu },

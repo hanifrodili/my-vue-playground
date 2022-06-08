@@ -1,5 +1,5 @@
 <template lang="pug">
-  .yezza-buider
+  .mypage-builder
     menu-bar(@import="importData")
     div(:style="$vuetify.breakpoint.width < 960 ? 'margin-top:46px' : 'margin-top:48px'")
       template(v-for="(components, index) in userComponents")
@@ -17,13 +17,13 @@
             add-dialog(:position="-1" @addBlock="addBlock" :usedBlock="userComponents")
 </template>
 <script>
-import YezzaBlocks from '@/components/yezzabuilder/blocks'
-import AddDialog from '@/components/yezzabuilder/builder/addBlockDialog.vue'
-import MenuBar from '@/components/yezzabuilder/builder/MenuBar.vue'
+import MyPageBlocks from '@/components/mypagebuilder/blocks'
+import AddDialog from '@/components/mypagebuilder/builder/addBlockDialog.vue'
+import MenuBar from '@/components/mypagebuilder/builder/MenuBar.vue'
 
 export default {
-  name: 'YezzaBuilder',
-  components: { AddDialog, MenuBar, ...YezzaBlocks },
+  name: 'MyPageBuilder',
+  components: { AddDialog, MenuBar, ...MyPageBlocks },
   data: ()=>({
     userComponents: []
   }),
@@ -65,9 +65,9 @@ export default {
       let newBlock = ''
       const newBlockID = this.randID(10)
       const reuseBlockID = this.randNum(5)
-      const intro = `{ "_uid": "${newBlockID}", "component": "Intro", "name": "Intro", "reuseBlockID": "${reuseBlockID}", "config": { "title": { "value": "Tell people about what makes your site special." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000" }, "btnTextColor": { "value": "#FFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#FFFFFF" }, "bgColor": { "value": "#FFFFFF" }, "bgImage": { "value": "${require("@/components/yezzabuilder/blocks/img/img-a.jpg")}" }, "blockPaddingTop": { "value": 150 }, "blockPaddingBottom": { "value": 150 }, "bgParallax": { "value": true } } }`
+      const intro = `{ "_uid": "${newBlockID}", "component": "Intro", "name": "Intro", "reuseBlockID": "${reuseBlockID}", "config": { "title": { "value": "Tell people about what makes your site special." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000" }, "btnTextColor": { "value": "#FFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#FFFFFF" }, "bgColor": { "value": "#FFFFFF" }, "bgImage": { "value": "${require("@/components/mypagebuilder/blocks/img/img-a.jpg")}" }, "blockPaddingTop": { "value": 150 }, "blockPaddingBottom": { "value": 150 }, "bgParallax": { "value": true } } }`
       const textBlock = `{ "_uid": "${newBlockID}", "component": "TextBlock", "name": "Text", "reuseBlockID": "${reuseBlockID}", "config": { "title": { "value": "Your Text Goes Here." }, "desc": {"value": "Your Long Descriptions Goes Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit." }, "textColor": { "value": "#000000" }, "bgColor": { "value": "#FFFFFF" }, "blockPaddingTop": { "value": 80 }, "blockPaddingBottom": { "value": 80 } } }`
-      const textImage = `{ "_uid": "${newBlockID}", "component": "TextImage", "name": "Text & Image", "reuseBlockID": "${reuseBlockID}", "config":{ "layout": { "value": 1 }, "title": { "value": "Your Text Goes Here" }, "desc": { "value": "Your Long Descriptions Goes Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000FF" }, "btnTextColor": { "value": "#FFFFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#000000FF" }, "bgColor": { "value": "#FFFFFFFF" }, "image": { "value": "${require('@/components/yezzabuilder/blocks/img/img-b.jpg')}" }, "blockPaddingTop": { "value": 80 }, "blockPaddingBottom": { "value": 80 } } }`
+      const textImage = `{ "_uid": "${newBlockID}", "component": "TextImage", "name": "Text & Image", "reuseBlockID": "${reuseBlockID}", "config":{ "layout": { "value": 1 }, "title": { "value": "Your Text Goes Here" }, "desc": { "value": "Your Long Descriptions Goes Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit." }, "btnText": { "value": "See More" }, "btnBgColor": { "value": "#000000FF" }, "btnTextColor": { "value": "#FFFFFFFF" }, "btnBorderRadius": { "value": "4px" }, "textColor": { "value": "#000000FF" }, "bgColor": { "value": "#FFFFFFFF" }, "image": { "value": "${require('@/components/mypagebuilder/blocks/img/img-b.jpg')}" }, "blockPaddingTop": { "value": 80 }, "blockPaddingBottom": { "value": 80 } } }`
       switch (block) {
         case 0:
           newBlock = intro

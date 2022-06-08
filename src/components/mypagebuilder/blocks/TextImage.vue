@@ -60,7 +60,7 @@
                 v-expansion-panel-content.py-3
                   //- v-select.mb-2(v-model="configs.layout.value" outlined dense :items="layoutList" item-value="id" item-text="label" hide-details="auto")
                   div(v-for="layout in layoutList" :key="layout.id" @click="changeLayout(layout.id)")
-                    v-img.mx-auto(:src="require(`@/components/yezzabuilder/blocks/img/${layout.img}`)" width="60%" :class="configs.layout.value === layout.id ? 'layout-border__active' : 'layout-border'" )
+                    v-img.mx-auto(:src="require(`@/components/mypagebuilder/blocks/img/${layout.img}`)" width="60%" :class="configs.layout.value === layout.id ? 'layout-border__active' : 'layout-border'" )
                     p.text-center {{layout.label}}
               v-expansion-panel(style="background-color:transparent")
                 v-expansion-panel-header Content
@@ -110,7 +110,7 @@
             v-btn(color="primary" @click="dialog=false") Done
 </template>
 <script>
-import SpeedMenu from '@/components/yezzabuilder/builder/SpeedMenu.vue'
+import SpeedMenu from '@/components/mypagebuilder/builder/SpeedMenu.vue'
 export default {
   name: 'TextImage',
   components: { SpeedMenu },

@@ -54,7 +54,7 @@
             v-btn(color="primary" @click="dialog=false") Done
 </template>
 <script>
-import SpeedMenu from '@/components/yezzabuilder/builder/SpeedMenu.vue'
+import SpeedMenu from '@/components/mypagebuilder/builder/SpeedMenu.vue'
 export default {
   name: 'TextBlock',
   components: { SpeedMenu },

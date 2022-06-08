@@ -7,9 +7,9 @@
       component(:is="block.component" :key="block._uid")
 </template>
 <script>
-import Intro from '@/components/yezzabuilder/Intro.vue'
-import TextBlock from '@/components/yezzabuilder/Text.vue'
-import TextImage from '@/components/yezzabuilder/TextImage.vue'
+import Intro from '@/components/mypagebuilder/Intro.vue'
+import TextBlock from '@/components/mypagebuilder/Text.vue'
+import TextImage from '@/components/mypagebuilder/TextImage.vue'
 export default {
   name: 'LandingTest',
   components: { Intro, TextBlock, TextImage },
