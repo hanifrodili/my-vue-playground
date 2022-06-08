@@ -19,6 +19,8 @@
     "grapesjs-preset-newsletter": "^0.2.21",
     "grapesjs-preset-webpage": "^0.1.11",
     "vue": "^2.6.11",
+    "vue-eva-icons": "^1.1.1",
+    "vue-froala-wysiwyg": "^4.0.8",
     "vue-router": "^3.5.2",
     "vuetify": "^2.4.0"
   },

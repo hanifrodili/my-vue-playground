@@ -7,6 +7,8 @@ import BuilderHome from '../views/MyPageBuilder/index.vue'
 import MyPageBuilderPreview from '../views/MyPageBuilder/preview/_id.vue'
 import Builder from '../views/MyPageBuilder/builder/_id.vue'
 import GatherPage from '../views/Page/Gather/Index.vue'
+import RateCard from '../views/CreatorComponent.vue'
+import Froala from '../views/Froala.vue'
 
 Vue.use(VueRouter)
 
@@ -67,6 +69,16 @@ const routes = [
     path: '/mypagebuilder/builder/:id',
     name: 'Builder',
     component: Builder
+  },
+  {
+    path: '/ratecard',
+    name: 'Rate Card',
+    component: RateCard
+  },
+  {
+    path: '/froala',
+    name: 'Froala',
+    component: Froala
   }
 ]
 
